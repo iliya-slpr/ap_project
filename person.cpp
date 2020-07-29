@@ -1,7 +1,8 @@
 #include "person.h"
 
 
-Person::Person(QString _fn , QString _nc, Date _b, QString _u, QString _p)
+
+Person::Person(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
 {
     fullName = _fn;
     nCode = _nc;
@@ -10,7 +11,7 @@ Person::Person(QString _fn , QString _nc, Date _b, QString _u, QString _p)
     password = _p;
 }
 
-void Person::editProfile(QString _fn , QString _nc, Date _b, QString _u, QString _p)
+void Person::editProfile(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
 {
     fullName = _fn;
     nCode = _nc;
@@ -38,3 +39,4 @@ bool Person::isAdmin()
 {
     return admin;
 }
+

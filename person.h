@@ -1,27 +1,26 @@
-#ifndef PERSON_H
-#define PERSON_H
-
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
-#include "date.h"
-#include "time.h"
+#include "mydate.h"
+#include "mytime.h"
 #include "personallog.h"
+#ifndef PERSON_H
+#define PERSON_H
 
 
 class Person
 {
     QString fullName;
     QString nCode;
-    Date birthDate;
+    MyDate birthDate;
     QString username;
     QString password;
     QVector<PersonalLog> logs;
     bool admin;
 
 public:
-    Person(QString,QString,Date,QString,QString);
-    void editProfile(QString,QString,Date,QString,QString);
+    Person(QString,QString,MyDate,QString,QString);
+    void editProfile(QString,QString,MyDate,QString,QString);
     QString getfullName();
     QString nationalCode();
     QString getUsername();
