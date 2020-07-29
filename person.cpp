@@ -9,6 +9,8 @@ Person::Person(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
     birthDate = _b;
     username = _u;
     password = _p;
+	count++;
+	personId = count;
 }
 
 void Person::editProfile(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
@@ -19,11 +21,11 @@ void Person::editProfile(QString _fn , QString _nc, MyDate _b, QString _u, QStri
     username = _u;
     password = _p;
 }
-QString Person::getfullName()
+QString Person::getFullName()
 {
     return fullName;
 }
-QString Person::nationalCode()
+QString Person::getNationalCode()
 {
     return nCode;
 }
@@ -40,3 +42,8 @@ bool Person::isAdmin()
     return admin;
 }
 
+int Person::getId()
+{
+	return personId;
+}
+int Person::count = 0;

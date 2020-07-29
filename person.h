@@ -4,7 +4,6 @@
 #include "mydate.h"
 #include "mytime.h"
 #include "personallog.h"
-#include <QDate>
 #ifndef PERSON_H
 #define PERSON_H
 
@@ -13,16 +12,19 @@ class Person
 {
     QString fullName;
     QString nCode;
-    QDate birthDate;
+    MyDate birthDate;
     QString username;
     QString password;
     QVector<PersonalLog> logs;
     bool admin;
+	static int count;
+	int personId;
 
 public:
-    Person(QString,QString,QDate,QString,QString);
-    void editProfile(QString,QString,QDate,QString,QString);
-    QString getfullName();
+    Person(QString,QString,MyDate,QString,QString);
+    void editProfile(QString,QString,MyDate,QString,QString);
+	int getId();
+    QString getFullName();
     QString getNationalCode();
     QString getUsername();
     QString getPassword();
