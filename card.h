@@ -2,12 +2,12 @@
 #define CARD_H
 #include <QMainWindow>
 #include "securepassword.h"
-#include <QDate>
+#include <QTime>
 class Card
 {
     QString cardNumber;
     int cvv2;
-    QDate expireDate;
+    QTime expireDate;
     SecurePassword secPass;
     enum STATUS {
       ACTIVE , BLOCK , PENDING , REJECT
@@ -20,7 +20,11 @@ public:
     int getcvv2();
     bool isExpire();
     void getPassword();
+    void changeStatusToPending();
+    void changeStatusToReject();
+    void changeStatusToActive();
 
 };
+
 
 #endif // CARD_H
