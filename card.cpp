@@ -28,7 +28,7 @@ bool Card::isExpire()
     else return true;
 }
 
-SecurePassword Card::getPassword()
+void Card::getPassword()
 {
     SecurePassword newpass;
     secPass = newpass;

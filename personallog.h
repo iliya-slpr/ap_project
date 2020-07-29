@@ -5,17 +5,15 @@
     #include <QDate>
 class PersonalLog
 {
-    QDate loginDate;
-    QTime loginTime;
-    QDate logoutDate;
-    QTime logoutTime;
-    bool isLoggedOut;
+    QDate logDate;
+    QTime logTime;
+
+    enum TYPE{
+        LOGIN,LOGOUT
+    };
+    TYPE type;
 public:
-    //its only get login Data, because logout isnt a necessary Data and should not exist.
-    PersonalLog(QDate , QTime);
-    void setLogOut(QDate, QTime);
-
-
+    PersonalLog(TYPE);
 };
 
 #endif // PERSONALLOG_H

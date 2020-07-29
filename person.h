@@ -12,18 +12,18 @@ class Person
 {
     QString fullName;
     QString nCode;
-    MyDate birthDate;
+    QDate birthDate;
     QString username;
     QString password;
     QVector<PersonalLog> logs;
     bool admin;
-	static int count;
-	int personId;
+    static int count;
+    int personId;
 
 public:
     Person(QString,QString,MyDate,QString,QString);
     void editProfile(QString,QString,MyDate,QString,QString);
-	int getId();
+    int getId();
     QString getFullName();
     QString getNationalCode();
     QString getUsername();

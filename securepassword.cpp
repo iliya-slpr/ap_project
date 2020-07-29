@@ -1,8 +1,7 @@
 #include "securepassword.h"
 #include <stdlib.h>
 #include <ctime>
-#include "mydate.h"
-#include "mytime.h"
+
 
 
 SecurePassword::SecurePassword()

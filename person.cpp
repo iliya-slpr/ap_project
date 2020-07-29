@@ -2,18 +2,18 @@
 
 
 
-Person::Person(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
+Person::Person(QString _fn , QString _nc, QDate _b, QString _u, QString _p)
 {
     fullName = _fn;
     nCode = _nc;
     birthDate = _b;
     username = _u;
     password = _p;
-	count++;
-	personId = count;
+    count++;
+    personId = count;
 }
 
-void Person::editProfile(QString _fn , QString _nc, MyDate _b, QString _u, QString _p)
+void Person::editProfile(QString _fn , QString _nc, QDate _b, QString _u, QString _p)
 {
     fullName = _fn;
     nCode = _nc;
@@ -44,6 +44,6 @@ bool Person::isAdmin()
 
 int Person::getId()
 {
-	return personId;
+    return personId;
 }
 int Person::count = 0;

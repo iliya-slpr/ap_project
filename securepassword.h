@@ -2,8 +2,7 @@
 #define SECUREPASSWORD_H
 #include <stdlib.h>
 #include <ctime>
-#include "mydate.h"
-#include "mytime.h"
+
 #include<QTime>
 #include <QDate>
 

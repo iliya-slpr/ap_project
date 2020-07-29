@@ -2,7 +2,6 @@
 #define CARD_H
 #include <QMainWindow>
 #include "securepassword.h"
-#include "mydate.h"
 #include <QTime>
 class Card
 {
@@ -20,7 +19,7 @@ public:
     QString getCardNumber();
     int getcvv2();
     bool isExpire();
-    SecurePassword getPassword();
+    void getPassword();
 
 };
 
