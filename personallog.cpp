@@ -1,15 +1,15 @@
 #include "personallog.h"
 
-PersonalLog::PersonalLog(MyDate _D, MyTime _T)
+PersonalLog::PersonalLog(QDate _D, QTime _T)
 {
     loginDate = _D;
     loginTime = _T;
-    logoutDate = MyDate();
-    logoutTime = MyTime();
+    logoutDate = QDate(0,0,0);
+    logoutTime = QTime(0,0,0);
     isLoggedOut = false;
 }
 
-void PersonalLog::setLogOut(MyDate _D, MyTime _T)
+void PersonalLog::setLogOut(QDate _D, QTime _T)
 {
     logoutDate = _D;
     logoutTime = _T;
