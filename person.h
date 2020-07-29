@@ -1,22 +1,38 @@
-#ifndef PERSONALLOG_H
-#define PERSONALLOG_H
+#include <QMainWindow>
+#include <QObject>
+#include <QWidget>
 #include "mydate.h"
 #include "mytime.h"
-    #include<QTime>
-    #include <QDate>
-class PersonalLog
+#include "personallog.h"
+#include <QDate>
+#ifndef PERSON_H
+#define PERSON_H
+
+
+class Person
 {
-    QDate loginDate;
-    QTime loginTime;
-    QDate logoutDate;
-    QTime logoutTime;
-    bool isLoggedOut;
+    QString fullName;
+    QString nCode;
+    QDate birthDate;
+    QString username;
+    QString password;
+    QVector<PersonalLog> logs;
+    bool admin;
+
 public:
-    //its only get login Data, because logout isnt a necessary Data and should not exist.
-    PersonalLog(QDate , QTime);
-    void setLogOut(QDate, QTime);
+    Person(QString,QString,QDate,QString,QString);
+    void editProfile(QString,QString,QDate,QString,QString);
+    QString getfullName();
+    QString getNationalCode();
+    QString getUsername();
+    QString getPassword();
+    bool isAdmin();
+
+
+
+
 
 
 };
 
-#endif // PERSONALLOG_H
+#endif // PERSON_H
