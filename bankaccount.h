@@ -26,6 +26,7 @@ public:
     //getlast10Transaction
     Card getCard();
     void minusBalance(int);
+    QVector<int> owners;
 };
 
 
