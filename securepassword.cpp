@@ -9,13 +9,15 @@ SecurePassword::SecurePassword()
 {
     srand(time(0));
         password = (rand()%1000000)+100000;
+        validTime = QTime::currentTime().addSecs(120);
 
 }
 
-bool SecurePassword::isValid(MyDate _d, MyTime _t)
+bool SecurePassword::isValid()
 {
-    //compare times and return true if password valid
 
+    if(QTime::currentTime()>validTime)return false;
+    else return true;
 
 }
 

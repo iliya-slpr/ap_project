@@ -4,15 +4,17 @@
 #include <ctime>
 #include "mydate.h"
 #include "mytime.h"
+#include<QTime>
+#include <QDate>
 
 class SecurePassword
 {
     unsigned int password;
-    MyDate validDate;
-    MyTime validTime;
+    QTime createdTime;
+    QTime validTime;
 public:
     SecurePassword();
-    bool isValid(MyDate,MyTime);
+    bool isValid();
 };
 
 #endif // SECUREPASSWORD_H
