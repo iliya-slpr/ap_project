@@ -1,8 +1,6 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
-#include "mydate.h"
-#include "mytime.h"
 #include "personallog.h"
 #ifndef PERSON_H
 #define PERSON_H
@@ -21,8 +19,8 @@ class Person
     int personId;
 
 public:
-    Person(QString,QString,MyDate,QString,QString);
-    void editProfile(QString,QString,MyDate,QString,QString);
+    Person(QString,QString,QDate,QString,QString);
+    void editProfile(QString,QString,QDate,QString,QString);
     int getId();
     QString getFullName();
     QString getNationalCode();

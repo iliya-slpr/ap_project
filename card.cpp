@@ -5,10 +5,9 @@
 Card::Card()
 {
     srand(time(0));
-    cardNumber = QString::number((((long long int)rand())%100000000 + 1000000000));
+    cardNumber = QString::number((((long long int)rand())%1000000000 + 10000000000));
     cvv2 = (rand()%10000)+1000;
-    expireDate = QTime::currentTime();
-
+    expireDate = QDate::currentDate().addYears(4);
 }
 
 QString Card::getCardNumber()
@@ -24,7 +23,7 @@ int Card::getcvv2()
 
 bool Card::isExpire()
 {
-    if(expireDate>QTime::currentTime())return false;
+    if(expireDate>QDate::currentDate())return false;
     else return true;
 }
 
@@ -32,5 +31,4 @@ void Card::getPassword()
 {
     SecurePassword newpass;
     secPass = newpass;
-
 }
