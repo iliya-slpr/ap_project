@@ -22,7 +22,8 @@ SOURCES += \
     mainwindow.cpp \
     person.cpp \
     personallog.cpp \
-    securepassword.cpp
+    securepassword.cpp \
+    user.cpp
 
 HEADERS += \
     bankaccount.h \
@@ -30,7 +31,8 @@ HEADERS += \
     mainwindow.h \
     person.h \
     personallog.h \
-    securepassword.h
+    securepassword.h \
+    user.h
 
 FORMS += \
     mainwindow.ui
