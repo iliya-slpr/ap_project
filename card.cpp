@@ -5,7 +5,7 @@
 Card::Card()
 {
     srand(time(0));
-    cardNumber = QString::number((((long long int)rand())%000000 + 1000000000));
+    cardNumber = QString::number((((long long int)rand())%1000000 + 1000000000));
     cvv2 = (rand()%10000)+1000;
     expireDate = QTime::currentTime();
 

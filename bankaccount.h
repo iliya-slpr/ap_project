@@ -7,6 +7,7 @@ class transaction;
 
 class BankAccount
 {
+    QString accountNumber;
     int balance;
     Card card;
     enum TYPE{
@@ -19,6 +20,7 @@ class BankAccount
     STATUS status;
     bool HasCard;
     QVector<transaction> transactionList;
+
 
 
 public:
