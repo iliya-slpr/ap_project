@@ -1,5 +1,6 @@
 #ifndef USER_H
 #define USER_H
+#pragma once
 #include "person.h"
 #include "bankaccount.h"
 #include <QMainWindow>
@@ -10,7 +11,8 @@ private:
     QVector<BankAccount> accounts;
 public:
     User(QString,QString,QDate,QString,QString);
-    BankAccount getAccount(int n);
+    User();
+    QVector<BankAccount> getAccount();
 
 };
 

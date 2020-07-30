@@ -20,6 +20,7 @@ class Person
 
 public:
     Person(QString,QString,QDate,QString,QString);
+    Person();
     void editProfile(QString,QString,QDate,QString,QString);
     int getId();
     QString getFullName();

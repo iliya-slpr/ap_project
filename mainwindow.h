@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QVector>
+#include "user.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -14,6 +15,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QVector<User> userList;
+    QVector<BankAccount*> accountList;
 
 private:
     Ui::MainWindow *ui;

@@ -12,6 +12,10 @@ Person::Person(QString _fn , QString _nc, QDate _b, QString _u, QString _p)
     count++;
     personId = count;
 }
+Person::Person()
+{
+}
+
 
 void Person::editProfile(QString _fn , QString _nc, QDate _b, QString _u, QString _p)
 {

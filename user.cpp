@@ -4,10 +4,14 @@ User::User(QString _fn , QString _nc, QDate _b, QString _u, QString _p):Person( 
 {
 
 }
-
-BankAccount User::getAccount(int n)
+User::User()
 {
-    return accounts[n];
+
+}
+
+QVector<BankAccount> User::getAccount()
+{
+    return accounts;
 }
 
 

@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include "securepassword.h"
 #include <QTime>
+
+
 class Card
 {
     QString cardNumber;
@@ -13,7 +15,6 @@ class Card
       ACTIVE , BLOCK , PENDING , REJECT
     };
     STATUS status;
-    //transaction
 public:
     Card();
     QString getCardNumber();
