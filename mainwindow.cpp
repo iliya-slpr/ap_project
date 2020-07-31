@@ -6,9 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    User admin("arefasmand","12312312",QDate::currentDate(),"arefasmand","arefasmand");
-    userList.push_back(admin);
-
+//    User admin("arefasmand","12312312",QDate::currentDate(),"arefasmand","arefasmand");
+//    userList.push_back(admin);
+    readUsers();
     login=new loginDialog();
     int result=login->exec();
     while(1)
@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
             accountList.push_back(&userList[i].getAccount()[j]);
         }
     }
+    writeUsers();
 }
 bool MainWindow::getLoginSeccess()
 {
@@ -68,7 +69,7 @@ void MainWindow::readUsers()
     //    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
     //                                                    "/",
     //                                                    tr("Json File (*.json)"));
-    QFile inFile("/.datas.json");
+    QFile inFile("E:\\data.json");
     inFile.open(QIODevice::ReadOnly|QIODevice::Text);
     QByteArray data = inFile.readAll();
     inFile.close();
@@ -153,7 +154,7 @@ void MainWindow::readUsers()
 
 void MainWindow::writeUsers()
 {
-    QFile file("/.datas.json");
+    QFile file("E:\\data.json");
     QJsonObject mainObj;
     QJsonArray mainArray;
     for(int i = 0 ; i<userList.size() ; i++){
