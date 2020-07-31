@@ -45,8 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
         if(loginSeccess==true)
             break;
     }
-    if(loginSeccess==false)
-        this->close();
     ui->setupUi(this);
     for (int i=0;i<userList.size();i++)
     {
@@ -56,7 +54,10 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 }
-
+bool MainWindow::getLoginSeccess()
+{
+    return loginSeccess;
+}
 MainWindow::~MainWindow()
 {
     delete ui;

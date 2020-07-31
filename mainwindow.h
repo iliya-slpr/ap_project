@@ -25,6 +25,7 @@ public:
     QVector<BankAccount*> accountList;
     void readUsers();
     void writeUsers();
+    bool getLoginSeccess();
 
 
 private:
