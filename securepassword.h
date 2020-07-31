@@ -11,8 +11,11 @@ class SecurePassword
     unsigned int password;
     QTime createdTime;
     QTime validTime;
+    QDate createdDate;
 public:
     SecurePassword();
+    SecurePassword(unsigned int,QTime,QTime,QDate);
+    int getPasswordOfSecPass();
     bool isValid();
 };
 

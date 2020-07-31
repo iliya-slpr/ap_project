@@ -7,28 +7,28 @@ class transaction;
 
 class BankAccount
 {
+    QString accountNumber;
     int balance;
     Card card;
-    enum TYPE{
-        SAVING , SHORT_TERM , SHORT_TERM_LEGAL , LONG_TERM
-    };
-    TYPE type;
-    enum STATUS {
-      ACTIVE , BLOCK , PENDING , REJECT
-    };
-    STATUS status;
+    int type;    ///// SAVING=0 , SHORT_TERM=1 , SHORT_TERM_LEGAL=2 , LONG_TERM=3
+    int status;   ///// ACTIVE=0 , BLOCK=1 , PENDIN2 , REJECT=3
     bool HasCard;
     QVector<transaction> transactionList;
 
-
 public:
-    BankAccount(int, TYPE);
+    BankAccount(int, int);
+    BankAccount(QString,Card,int, int,int,bool,QVector<transaction>);
+    BankAccount(QString,int);
     BankAccount();
     void requestCard();
     int getBalance();
+    QString getAccountNumber();
+    int getStatus();
+    int getType();
+    bool hasCard();
     bool transfer(BankAccount* _originAcc,BankAccount* _desAcc,unsigned int _amount);
     bool hasACard();
-    QVector<transaction> getlast10Transaction();
+    QVector<transaction> getTransactions();
     Card getCard();
     void minusBalance(int);
     void plusBalance(int);
@@ -47,12 +47,13 @@ private:
     QDate trDate;
 public:
     transaction(BankAccount _originAcc,BankAccount _desAcc,unsigned int _amount,bool _type);
+    transaction(BankAccount _originAcc,BankAccount _desAcc,unsigned int _amount,bool _type,QTime,QDate);
     transaction();
     BankAccount getOriginBankAcc();
     BankAccount getDesBankAcc();
     unsigned int getAmount();
     QTime getTime();
     QDate getDate();
-
+    bool getType();
 };
 #endif // BANKACCOUNT_H

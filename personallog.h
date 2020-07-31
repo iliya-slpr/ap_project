@@ -7,13 +7,14 @@ class PersonalLog
 {
     QDate logDate;
     QTime logTime;
-
-    enum TYPE{
-        LOGIN,LOGOUT
-    };
-    TYPE type;
+    bool type;      /////  0 = login  1 = logout
 public:
-    PersonalLog(TYPE);
+    PersonalLog(bool);
+    PersonalLog(QDate,QTime,bool);
+    PersonalLog();
+    bool getLogType();
+    QDate getLogDate();
+    QTime getLogTime();
 };
 
 #endif // PERSONALLOG_H

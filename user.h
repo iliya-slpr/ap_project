@@ -11,6 +11,7 @@ private:
     QVector<BankAccount> accounts;
 public:
     User(QString,QString,QDate,QString,QString);
+    User(QString,QString,QDate,QString,QString,QVector<PersonalLog>,bool,int,QVector<BankAccount>);
     User();
     QVector<BankAccount> getAccount();
 

@@ -3,6 +3,11 @@
 #include <QVector>
 #include "user.h"
 #include <QMainWindow>
+#include <QFileDialog>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,8 +22,10 @@ public:
     ~MainWindow();
     QVector<User> userList;
     QVector<BankAccount*> accountList;
+    void readUsers();
 
 private:
+    QMessageBox message;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

@@ -9,14 +9,12 @@ class Card
 {
     QString cardNumber;
     int cvv2;
-    QTime expireDate;
+    QDate expireDate;
     SecurePassword secPass;
-    enum STATUS {
-      ACTIVE , BLOCK , PENDING , REJECT
-    };
-    STATUS status;
+    int status;     /////ACTIVE=0 , BLOCK=1 , PENDING=2 , REJECT=3
 public:
     Card();
+    Card(QString,int,QDate,SecurePassword,int);
     QString getCardNumber();
     int getcvv2();
     bool isExpire();
@@ -24,6 +22,8 @@ public:
     void changeStatusToPending();
     void changeStatusToReject();
     void changeStatusToActive();
+    int getStatus();
+    QDate getExpireDate();
 
 };
 

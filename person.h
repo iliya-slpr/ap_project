@@ -13,18 +13,23 @@ class Person
     QDate birthDate;
     QString username;
     QString password;
-    QVector<PersonalLog> logs;
     bool admin;
     static int count;
     int personId;
 
+protected:
+    QVector<PersonalLog> logs;
+
 public:
     Person(QString,QString,QDate,QString,QString);
+    Person(QString,QString,QDate,QString,QString,bool,int);
     Person();
     void editProfile(QString,QString,QDate,QString,QString);
+    QVector<PersonalLog> getLog();
     int getId();
     QString getFullName();
     QString getNationalCode();
+    QDate getBirthDate();
     QString getUsername();
     QString getPassword();
     bool isAdmin();
