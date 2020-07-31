@@ -171,12 +171,13 @@ void MainWindow::writeUsers()
                 transactionToAdd["trTime"] = userList[i].getAccount()[k].getTransactions()[l].getTime().toString("HH/mm/ss");
                 transactionsArray.append(transactionToAdd);
             }
-            accountToAdd["transaction"]= transactionsArray;
+            accountToAdd["transactionList"]= transactionsArray;
             accountsArray.append(accountToAdd);
         }
+        userObj["accounts"]=accountsArray;
         mainArray.append(userObj);
     }
-    mainObj["userList"] = mainArray;
+    mainObj["users"] = mainArray;
     QJsonDocument mainDoc(mainObj);
 
 
