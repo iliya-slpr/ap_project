@@ -6,6 +6,47 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    User admin("arefasmand","12312312",QDate::currentDate(),"arefasmand","arefasmand");
+    userList.push_back(admin);
+
+    login=new loginDialog();
+    int result=login->exec();
+    while(1)
+    {
+        if(result==QDialog::Accepted)
+        {
+            for(int i=0;i<userList.size();i++)
+            {
+                if(login->getUsername()==userList[i].getUsername()&&login->getPassword()==userList[i].getPassword())
+                {
+                    currentUser=userList[i];
+                    message.setText("با موفقیت وارد شدید!");
+                    message.setWindowTitle("موفق");
+                    message.setStandardButtons(QMessageBox::Ok);
+                    loginSeccess=true;
+                    if(message.exec()==QMessageBox::Ok)
+                        break;
+                }
+            }
+            if(loginSeccess==false)
+            {
+                message.setText("نام کاربری یا رمز عبور نادرست است !");
+                message.setWindowTitle("خطا");
+                message.setStandardButtons(QMessageBox::Ok);
+                if(message.exec()==QMessageBox::Ok)
+                    result=login->exec();
+            }
+        }
+        else if(result==QDialog::Rejected)
+        {
+            this->close();
+            break;
+        }
+        if(loginSeccess==true)
+            break;
+    }
+    if(loginSeccess==false)
+        this->close();
     ui->setupUi(this);
     for (int i=0;i<userList.size();i++)
     {

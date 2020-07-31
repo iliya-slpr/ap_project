@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include "logindialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,10 +26,11 @@ public:
     void readUsers();
     void writeUsers();
 
-private slots:
-    void on_eraseBtn_clicked();
 
 private:
+    bool loginSeccess=false;
+    User currentUser;
+    loginDialog * login;
     QMessageBox message;
     Ui::MainWindow *ui;
 };
