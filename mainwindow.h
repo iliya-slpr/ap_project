@@ -25,6 +25,9 @@ public:
     void readUsers();
     void writeUsers();
 
+private slots:
+    void on_eraseBtn_clicked();
+
 private:
     QMessageBox message;
     Ui::MainWindow *ui;

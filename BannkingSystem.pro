@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     bankaccount.cpp \
     card.cpp \
+    loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     person.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 HEADERS += \
     bankaccount.h \
     card.h \
+    loginwindow.h \
     mainwindow.h \
     person.h \
     personallog.h \
@@ -35,6 +37,7 @@ HEADERS += \
     user.h
 
 FORMS += \
+    loginwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
