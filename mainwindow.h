@@ -23,6 +23,7 @@ public:
     QVector<User> userList;
     QVector<BankAccount*> accountList;
     void readUsers();
+    void writeUsers();
 
 private:
     QMessageBox message;

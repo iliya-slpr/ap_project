@@ -23,10 +23,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::readUsers()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/",
-                                                    tr("Json File (*.json)"));
-    QFile inFile(fileName);
+    //    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+    //                                                    "/",
+    //                                                    tr("Json File (*.json)"));
+    QFile inFile("/.datas.json");
     inFile.open(QIODevice::ReadOnly|QIODevice::Text);
     QByteArray data = inFile.readAll();
     inFile.close();
@@ -84,12 +84,12 @@ void MainWindow::readUsers()
                 QJsonArray transactionArray=account.toObject().value("transactionList").toArray();
                 foreach(const QJsonValue & Transaction, transactionArray)
                 {
-                     QJsonObject _originAcc=Transaction.toObject().value("originAcc").toObject();
-                     QString originAccountNumber =_originAcc.value("accountNumber").toString();
-                     int originAccountBalance =_originAcc.value("balance").toInt();
-                     QJsonObject _desAcc=Transaction.toObject().value("desAcc").toObject();
-                     QString desAccountNumber =_desAcc.value("accountNumber").toString();
-                     int desAccountBalance =_desAcc.value("balance").toInt();
+                    QJsonObject _originAcc=Transaction.toObject().value("originAcc").toObject();
+                    QString originAccountNumber =_originAcc.value("accountNumber").toString();
+                    int originAccountBalance =_originAcc.value("balance").toInt();
+                    QJsonObject _desAcc=Transaction.toObject().value("desAcc").toObject();
+                    QString desAccountNumber =_desAcc.value("accountNumber").toString();
+                    int desAccountBalance =_desAcc.value("balance").toInt();
 
 
                     BankAccount originAcc(originAccountNumber,originAccountBalance);
@@ -107,5 +107,81 @@ void MainWindow::readUsers()
             userList.push_back(User(fullName,nCode,birthDate,username,password,logs,admin,id,accounts));
         }
     }
+}
+
+void MainWindow::writeUsers()
+{
+    QFile file("/.datas.json");
+    QJsonObject mainObj;
+    QJsonArray mainArray;
+    for(int i = 0 ; i<userList.size() ; i++){
+        QJsonObject userObj;
+        userObj["personId"]=userList[i].getId();
+        userObj["name"]=userList[i].getFullName();
+        userObj["nCode"]=userList[i].getNationalCode();
+        userObj["birthDate"]=userList[i].getBirthDate().toString("dd/MM/yyyy");
+        userObj["username"]=userList[i].getUsername();
+        userObj["password"]=userList[i].getPassword();
+        QJsonArray logsArray;
+        for(int j = 0 ; j < userList[i].getLog().size(); j++){
+            QJsonObject logToAdd;
+            logToAdd["logDate"] = userList[i].getLog()[j].getLogDate().toString("dd/MM/yyyy");
+            logToAdd["logTime"] = userList[i].getLog()[j].getLogTime().toString("HH/mm/ss");
+            logToAdd["logType"] = userList[i].getLog()[j].getLogType();
+            logsArray.append(logToAdd);
+        }
+        userObj["logs"]=logsArray;
+        QJsonArray accountsArray;
+        for(int k=0 ; k < userList[i].getAccount().size() ; k++){
+            QJsonObject accountToAdd;
+            accountToAdd["accountNumber"]=userList[i].getAccount()[k].getAccountNumber();
+            accountToAdd["balance"]=userList[i].getAccount()[k].getBalance();
+            accountToAdd["type"]=userList[i].getAccount()[k].getType();
+            accountToAdd["status"]=userList[i].getAccount()[k].getStatus();
+            accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
+            QJsonObject cardObj;
+            if(userList[i].getAccount()[k].hasACard()){
+                cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
+                cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
+                cardObj["expireDate"]= userList[i].getAccount()[k].getCard().getExpireDate().toString("dd/MM/yyyy");
+                cardObj["secPass"]= 0;
+            }
+            else {
+                cardObj["cardNumber"]= 0;
+                cardObj["cvv2"]= 0;
+                cardObj["expireDate"]= 0;
+                cardObj["secPass"]= 0;
+            }
+            QJsonArray ownersArray;
+            for(int m = 0 ; m< userList[i].getAccount()[k].owners.size();m++){
+                QJsonObject ownerToAdd;
+                ownerToAdd["personId"] = userList[i].getAccount()[k].owners[m];
+                ownersArray.append(ownerToAdd);
+            }
+            accountToAdd["owners"] = ownersArray;
+            accountToAdd["card"]=cardObj;
+            QJsonArray transactionsArray;
+            for(int l=0; l<userList[i].getAccount()[k].getTransactions().size();l++){
+                QJsonObject transactionToAdd;
+                transactionToAdd["type"] = userList[i].getAccount()[k].getTransactions()[l].getType();
+                transactionToAdd["originAcc"] = userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getAccountNumber();
+                transactionToAdd["desAcc"] = userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getAccountNumber();
+                transactionToAdd["amount"] = QString::number(userList[i].getAccount()[k].getTransactions()[l].getAmount());
+                transactionToAdd["trDate"] = userList[i].getAccount()[k].getTransactions()[l].getDate().toString("dd/MM/yyyy");
+                transactionToAdd["trTime"] = userList[i].getAccount()[k].getTransactions()[l].getTime().toString("HH/mm/ss");
+                transactionsArray.append(transactionToAdd);
+            }
+            accountToAdd["transaction"]= transactionsArray;
+            accountsArray.append(accountToAdd);
+        }
+        mainArray.append(userObj);
+    }
+    mainObj["userList"] = mainArray;
+    QJsonDocument mainDoc(mainObj);
+
+
+    file.open(QIODevice::WriteOnly);
+    file.write(mainDoc.toJson());
+
 }
 
