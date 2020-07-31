@@ -1,11 +1,13 @@
 #include "bankaccount.h"
-
+#include <QMainWindow>
 enum Type
 {
     send,recive
 };
 BankAccount::BankAccount(int _b, int _t)
 {
+    srand(time(0));
+    accountNumber = QString::number((((long long int)rand())%10000 + 100000));
     balance = _b;
     type = _t;
     status = 2;
