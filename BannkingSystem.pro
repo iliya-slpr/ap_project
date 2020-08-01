@@ -16,6 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    adduser.cpp \
+    adminpanel.cpp \
     bankaccount.cpp \
     card.cpp \
     logindialog.cpp \
@@ -24,9 +26,12 @@ SOURCES += \
     person.cpp \
     personallog.cpp \
     securepassword.cpp \
+    showlogs.cpp \
     user.cpp
 
 HEADERS += \
+    adduser.h \
+    adminpanel.h \
     bankaccount.h \
     card.h \
     logindialog.h \
@@ -34,11 +39,15 @@ HEADERS += \
     person.h \
     personallog.h \
     securepassword.h \
+    showlogs.h \
     user.h
 
 FORMS += \
+    adduser.ui \
+    adminpanel.ui \
     logindialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    showlogs.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

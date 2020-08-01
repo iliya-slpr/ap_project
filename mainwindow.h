@@ -30,7 +30,7 @@ public:
 
 private:
     bool loginSeccess=false;
-    User currentUser;
+    User * currentUser;
     loginDialog * login;
     QMessageBox message;
     Ui::MainWindow *ui;

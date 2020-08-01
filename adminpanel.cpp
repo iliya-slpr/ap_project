@@ -1,77 +1,25 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "adminpanel.h"
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+#include "ui_adminpanel.h"
+#include <QDebug>
+#include "showlogs.h"
+#define ROW ui->usersTable->rowCount()-1
+AdminPanel::AdminPanel(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::AdminPanel)
 {
     readUsers();
-//    User admin("arefasmand","12312312",QDate::currentDate(),"arefasmand","arefasmand");
-//    User admin2("iliya","12312312",QDate::currentDate(),"useriliya","passiliya");
-//    userList.push_back(admin);
-//    userList.push_back(admin2);
-    writeUsers();
-    login=new loginDialog();
-    int result=login->exec();
-    while(1)
-    {
-        if(result==QDialog::Accepted)
-        {
-            for(int i=0;i<userList.size();i++)
-            {
-                if(login->getUsername()==userList[i].getUsername()&&login->getPassword()==userList[i].getPassword())
-                {
-                    currentUser=&userList[i];
-                    message.setText("با موفقیت وارد شدید!");
-                    message.setWindowTitle("موفق");
-                    message.setStandardButtons(QMessageBox::Ok);
-                    loginSeccess=true;
-                    if(message.exec()==QMessageBox::Ok)
-                        break;
-                }
-            }
-            if(loginSeccess==false)
-            {
-                message.setText("نام کاربری یا رمز عبور نادرست است !");
-                message.setWindowTitle("خطا");
-                message.setStandardButtons(QMessageBox::Ok);
-                if(message.exec()==QMessageBox::Ok)
-                    result=login->exec();
-            }
-        }
-        else if(result==QDialog::Rejected)
-        {
-            this->close();
-            break;
-        }
-        if(loginSeccess==true)
-            break;
-    }
-//    ui->setupUi(this);
 
-        AdminPanel *a;
-        a= new AdminPanel();
-        a->show();
+    ui->setupUi(this);
+    setupUserTable();
 
-    for (int i=0;i<userList.size();i++)
-    {
-        for(int j=0;j<userList[i].getAccount().size();j++)
-        {
-            accountList.push_back(&userList[i].getAccount()[j]);
-        }
-    }
 }
-bool MainWindow::getLoginSeccess()
-{
-    return loginSeccess;
-}
-MainWindow::~MainWindow()
+
+AdminPanel::~AdminPanel()
 {
     delete ui;
 }
 
-void MainWindow::readUsers()
+void AdminPanel::readUsers()
 {
     //    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
     //                                                    "/",
@@ -159,7 +107,7 @@ void MainWindow::readUsers()
     }
 }
 
-void MainWindow::writeUsers()
+void AdminPanel::writeUsers()
 {
     QFile file("E:\\data.json");
     QJsonObject mainObj;
@@ -167,7 +115,7 @@ void MainWindow::writeUsers()
     for(int i = 0 ; i<userList.size() ; i++){
         QJsonObject userObj;
         userObj["personId"]=userList[i].getId();
-            userObj["fullName"]=userList[i].getFullName();
+        userObj["fullName"]=userList[i].getFullName();
         userObj["nCode"]=userList[i].getNationalCode();
         userObj["birthDate"]=userList[i].getBirthDate().toString("dd/MM/yyyy");
         userObj["username"]=userList[i].getUsername();
@@ -236,3 +184,91 @@ void MainWindow::writeUsers()
 
 }
 
+void AdminPanel::setupUserTable()
+{
+    int rows = ui->usersTable->rowCount();
+    for(int i = 0 ; i < rows ; i++)
+        ui->usersTable->removeRow(0);
+
+    QStringList titles;
+    ui->usersTable->setColumnCount(5);
+    titles<<"نام"<<"کدملی"<<"تاریخ تولد"<<"نام کاربری"<<"تعداد اکانت";
+    ui->usersTable->setHorizontalHeaderLabels(titles);
+    for(int i = 0 ; i < userList.size() ; i++){
+        ui->usersTable->insertRow(ui->usersTable->rowCount());
+        ui->usersTable->setItem(ROW,0,new QTableWidgetItem(userList[i].getFullName()));
+        ui->usersTable->setItem(ROW,1,new QTableWidgetItem(userList[i].getNationalCode()));
+        ui->usersTable->setItem(ROW,2,new QTableWidgetItem(userList[i].getBirthDate().toString("yyyy/MM/dd")));
+        ui->usersTable->setItem(ROW,3,new QTableWidgetItem(userList[i].getUsername()));
+        ui->usersTable->setItem(ROW,4,new QTableWidgetItem(QString::number(userList[i].getAccount().size())));
+    }
+}
+void AdminPanel::removeUser(QString nameToRemove){
+    for(int i = 0; i< userList.size() ; i++){
+        if(userList[i].getFullName()==nameToRemove){
+            userList.remove(i);
+            setupUserTable();
+            break;
+
+        }
+    }
+}
+void AdminPanel::on_deleteBtn_clicked()
+{
+    int ret = QMessageBox::information(this, tr("حذف کاربر"),
+                                       "آیا از حذف این کاربر اطمینان دارید؟",
+                                       QMessageBox::Ok
+                                       | QMessageBox::Cancel,
+                                       QMessageBox::Ok);
+
+    if(ret == QMessageBox::Ok){
+        QString nameToRemove = ui->usersTable->item(ui->usersTable->currentRow(),0)->text();
+        removeUser(nameToRemove);
+        writeUsers();
+    }
+}
+
+void AdminPanel::getDataToAdd(QString _fn, QString _nc, QDate _d, QString _u, QString _p)
+{
+    userList.push_back(User(_fn,_nc , _d, _u , _p));
+    writeUsers();
+    setupUserTable();
+}
+
+void AdminPanel::on_addUserBtn_clicked()
+{
+    addUser *d;
+    d = new addUser();
+    connect(d,SIGNAL(sendDataToAdd(QString ,QString,QDate,QString,QString)),this, SLOT(getDataToAdd(QString ,QString,QDate,QString,QString)));
+    d->show();
+}
+
+void AdminPanel::on_logsBtn_clicked()
+{
+    showLogs *d;
+    d = new showLogs();
+    int selectedUser = ui->usersTable->currentRow();
+    qDebug()<<selectedUser;
+    User currentUser = userList[selectedUser];
+    qDebug()<<userList[selectedUser].getLog()[0].getLogType();
+    qDebug()<<userList[selectedUser].getLog()[1].getLogType();
+
+    QString _loginLog ="", _logoutLog="";
+    for(int i=currentUser.getLog().size()-1;i>=0;i--)
+    {
+        QString temp="تاریخ : ";
+        temp+=currentUser.getLog()[i].getLogDate().toString();
+        temp+=" ساعت : ";
+        temp+=currentUser.getLog()[i].getLogTime().toString();
+        temp+=currentUser.getLog()[i].getLogType()==false?" نوع: ورود":" نوع: خروج ";
+        qDebug()<<currentUser.getLog()[i].getLogType();
+        if(currentUser.getLog()[i].getLogType()==false)
+            _loginLog +=temp+"\n";
+        else
+            _logoutLog +=temp+"\n";
+
+    }
+    connect(this,SIGNAL(sendLogsToDialog(QString ,QString)) ,d,SLOT(getLogs(QString, QString)));
+    emit sendLogsToDialog(_loginLog ,_logoutLog );
+    d->show();
+}

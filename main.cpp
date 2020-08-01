@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     m=new MainWindow();
     if(m->getLoginSeccess())
     {
-    m->show();
+    //m->show();
     return a.exec();
     }
     else

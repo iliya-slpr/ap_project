@@ -32,7 +32,7 @@ public:
     Card getCard();
     void minusBalance(int);
     void plusBalance(int);
-    QVector<int> owners;  
+    QVector<QString> owners;
 };
 
 
