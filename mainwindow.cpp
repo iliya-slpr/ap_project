@@ -1,59 +1,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
-//    User admin("arefasmand","12312312",QDate::currentDate(),"arefasmand","arefasmand");
-//    userList.push_back(admin);
-    readUsers();
+    application.readUsers();
     login=new loginDialog();
     int result=login->exec();
     while(1)
     {
         if(result==QDialog::Accepted)
         {
-            for(int i=0;i<userList.size();i++)
-            {
-                if(login->getUsername()==userList[i].getUsername()&&login->getPassword()==userList[i].getPassword())
-                {
-                    currentUser=userList[i];
-                    message.setText("با موفقیت وارد شدید!");
-                    message.setWindowTitle("موفق");
-                    message.setStandardButtons(QMessageBox::Ok);
-                    loginSeccess=true;
-                    if(message.exec()==QMessageBox::Ok)
-                        break;
-                }
-            }
-            if(loginSeccess==false)
-            {
-                message.setText("نام کاربری یا رمز عبور نادرست است !");
-                message.setWindowTitle("خطا");
-                message.setStandardButtons(QMessageBox::Ok);
-                if(message.exec()==QMessageBox::Ok)
-                    result=login->exec();
-            }
+            loginSeccess=application.login(login->getUsername(),login->getPassword());
+            application.writeUsers();
+            if(loginSeccess)
+                break;
         }
         else if(result==QDialog::Rejected)
         {
             this->close();
             break;
         }
-        if(loginSeccess==true)
-            break;
     }
     ui->setupUi(this);
-    for (int i=0;i<userList.size();i++)
-    {
-        for(int j=0;j<userList[i].getAccount().size();j++)
-        {
-            accountList.push_back(&userList[i].getAccount()[j]);
-        }
-    }
-    writeUsers();
+    on_editProfileTab_tabBarClicked(0);
+    on_editProfileTab_tabBarClicked(1);
+    on_lineEdit_textChanged("");
+
 }
 bool MainWindow::getLoginSeccess()
 {
@@ -63,169 +37,126 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::readUsers()
+void MainWindow::on_editProfileTab_tabBarClicked(int index)
 {
-    //    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-    //                                                    "/",
-    //                                                    tr("Json File (*.json)"));
-    QFile inFile("E:\\data.json");
-    inFile.open(QIODevice::ReadOnly|QIODevice::Text);
-    QByteArray data = inFile.readAll();
-    inFile.close();
-
-    QJsonParseError errorPtr;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &errorPtr);
-    if (doc.isNull()) {
-        message.setText("Parse faild!");
-        message.show();
-    }
-    else
+    if (index==0)
     {
-        QJsonObject rootObj = doc.object();
-        QJsonArray ptsArray = rootObj.value("users").toArray();
-        userList.erase(userList.begin(),userList.end());
-        foreach(const QJsonValue & val, ptsArray)
+        ui->nameLed->setText(application.currentUser->getFullName());
+        ui->nCodeLed->setText(application.currentUser->getNationalCode());
+        ui->BdateLed->setDate(application.currentUser->getBirthDate());
+        ui->usernameLed->setText(application.currentUser->getUsername());
+        ui->passLed->setText(application.currentUser->getPassword());
+    }
+    if(index==1)
+    {
+        ui->loginList->clear();
+        ui->logoutList->clear();
+        for(int i=application.currentUser->getLog().size()-1;i>=0;i--)
         {
-            int id= val.toObject().value("personId").toInt();
-            QString fullName =val.toObject().value("fullName").toString();
-            QString username=val.toObject().value("username").toString();
-            QString password=val.toObject().value("password").toString();
-            QString nCode=val.toObject().value("nCode").toString();
-            bool admin=val.toObject().value("admin").toBool();
-            QDate birthDate = QDate::fromString(val.toObject().value("birthDate").toString(),"dd/MM/yyyy");
-            QVector<PersonalLog> logs;
-            QJsonArray logArray=val.toObject().value("logs").toArray();
-            foreach(const QJsonValue & log, logArray)
-            {
-                logs.push_back(PersonalLog(QDate::fromString(log.toObject().value("logDate").toString(),"dd/MM/yyyy"),QTime::fromString(log.toObject().value("logTime").toString(),"HH/mm/ss"),log.toObject().value("type").toBool()));
-            }
+            QString temp="تاریخ : ";
+            temp+=application.currentUser->getLog()[i].getLogDate().toString();
+            temp+=" ساعت : ";
+            temp+=application.currentUser->getLog()[i].getLogTime().toString();
+            temp+=application.currentUser->getLog()[i].getLogType()==0?" نوع: ورود":" نوع: خروج ";
+            if(application.currentUser->getLog()[i].getLogType()==0)
+                ui->loginList->insertItem(i,new  QListWidgetItem(temp));
+            else
+                ui->logoutList->insertItem(i,new  QListWidgetItem(temp));
+            if(i<application.currentUser->getLog().size()-10)
+                break;
 
-
-            QVector<BankAccount> accounts;
-            QJsonArray accountArray=val.toObject().value("accounts").toArray();
-
-            foreach(const QJsonValue & account, accountArray)
-            {
-                QString accountNumber =account.toObject().value("accountNumber").toString();
-                int type=account.toObject().value("type").toInt();
-                int status=account.toObject().value("status").toInt();
-                int balance=account.toObject().value("balance").toInt();
-                bool hasCard=val.toObject().value("hasCard").toBool();
-
-                QJsonObject cardObj=account.toObject().value("card").toObject();
-                unsigned int password=cardObj.value("secPass").toObject().value("password").toInt();
-                QDate createdDate=QDate::fromString(cardObj.value("secPass").toObject().value("dateCreated").toString(),"dd/MM/yyyy");
-                QTime createdTime=QTime::fromString(cardObj.value("secPass").toObject().value("timeCreated").toString(),"HH/mm/ss");
-                QTime validTime=QTime::fromString(cardObj.value("secPass").toObject().value("validTime").toString(),"HH/mm/ss");
-                int cardStatus=cardObj.value("status").toInt();
-                int cvv2=cardObj.value("cvv2").toInt();
-                QString cardNumber =cardObj.value("cardNumber").toString();
-                QDate expireDate=QDate::fromString(cardObj.value("expireDate").toString(),"dd/MM/yyyy");
-                Card card=Card(cardNumber,cvv2,expireDate,SecurePassword(password,createdTime,validTime,createdDate),cardStatus);
-                QVector<transaction> transactionList;
-                QJsonArray transactionArray=account.toObject().value("transactionList").toArray();
-                foreach(const QJsonValue & Transaction, transactionArray)
-                {
-                    QJsonObject _originAcc=Transaction.toObject().value("originAcc").toObject();
-                    QString originAccountNumber =_originAcc.value("accountNumber").toString();
-                    int originAccountBalance =_originAcc.value("balance").toInt();
-                    QJsonObject _desAcc=Transaction.toObject().value("desAcc").toObject();
-                    QString desAccountNumber =_desAcc.value("accountNumber").toString();
-                    int desAccountBalance =_desAcc.value("balance").toInt();
-
-
-                    BankAccount originAcc(originAccountNumber,originAccountBalance);
-                    BankAccount desAcc(desAccountNumber,desAccountBalance);
-                    int amount=Transaction.toObject().value("amount").toInt();
-                    bool type=Transaction.toObject().value("type").toBool();
-                    QDate date = QDate::fromString(Transaction.toObject().value("trDate").toString(),"dd/MM/yyyy");
-                    QTime time = QTime::fromString(Transaction.toObject().value("trTime").toString(),"HH/mm/ss");
-                    transactionList.push_back(transaction(originAcc,desAcc,amount,type,time,date));
-                }
-
-                accounts.push_back(BankAccount(accountNumber,card,balance, type,status,hasCard,transactionList));
-
-            }
-            userList.push_back(User(fullName,nCode,birthDate,username,password,logs,admin,id,accounts));
         }
     }
 }
 
-void MainWindow::writeUsers()
+void MainWindow::on_pushButton_clicked()
 {
-    QFile file("E:\\data.json");
-    QJsonObject mainObj;
-    QJsonArray mainArray;
-    for(int i = 0 ; i<userList.size() ; i++){
-        QJsonObject userObj;
-        userObj["personId"]=userList[i].getId();
-        userObj["name"]=userList[i].getFullName();
-        userObj["nCode"]=userList[i].getNationalCode();
-        userObj["birthDate"]=userList[i].getBirthDate().toString("dd/MM/yyyy");
-        userObj["username"]=userList[i].getUsername();
-        userObj["password"]=userList[i].getPassword();
-        QJsonArray logsArray;
-        for(int j = 0 ; j < userList[i].getLog().size(); j++){
-            QJsonObject logToAdd;
-            logToAdd["logDate"] = userList[i].getLog()[j].getLogDate().toString("dd/MM/yyyy");
-            logToAdd["logTime"] = userList[i].getLog()[j].getLogTime().toString("HH/mm/ss");
-            logToAdd["logType"] = userList[i].getLog()[j].getLogType();
-            logsArray.append(logToAdd);
-        }
-        userObj["logs"]=logsArray;
-        QJsonArray accountsArray;
-        for(int k=0 ; k < userList[i].getAccount().size() ; k++){
-            QJsonObject accountToAdd;
-            accountToAdd["accountNumber"]=userList[i].getAccount()[k].getAccountNumber();
-            accountToAdd["balance"]=userList[i].getAccount()[k].getBalance();
-            accountToAdd["type"]=userList[i].getAccount()[k].getType();
-            accountToAdd["status"]=userList[i].getAccount()[k].getStatus();
-            accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
-            QJsonObject cardObj;
-            if(userList[i].getAccount()[k].hasACard()){
-                cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
-                cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
-                cardObj["expireDate"]= userList[i].getAccount()[k].getCard().getExpireDate().toString("dd/MM/yyyy");
-                cardObj["secPass"]= 0;
-            }
-            else {
-                cardObj["cardNumber"]= 0;
-                cardObj["cvv2"]= 0;
-                cardObj["expireDate"]= 0;
-                cardObj["secPass"]= 0;
-            }
-            QJsonArray ownersArray;
-            for(int m = 0 ; m< userList[i].getAccount()[k].owners.size();m++){
-                QJsonObject ownerToAdd;
-                ownerToAdd["personId"] = userList[i].getAccount()[k].owners[m];
-                ownersArray.append(ownerToAdd);
-            }
-            accountToAdd["owners"] = ownersArray;
-            accountToAdd["card"]=cardObj;
-            QJsonArray transactionsArray;
-            for(int l=0; l<userList[i].getAccount()[k].getTransactions().size();l++){
-                QJsonObject transactionToAdd;
-                transactionToAdd["type"] = userList[i].getAccount()[k].getTransactions()[l].getType();
-                transactionToAdd["originAcc"] = userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getAccountNumber();
-                transactionToAdd["desAcc"] = userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getAccountNumber();
-                transactionToAdd["amount"] = QString::number(userList[i].getAccount()[k].getTransactions()[l].getAmount());
-                transactionToAdd["trDate"] = userList[i].getAccount()[k].getTransactions()[l].getDate().toString("dd/MM/yyyy");
-                transactionToAdd["trTime"] = userList[i].getAccount()[k].getTransactions()[l].getTime().toString("HH/mm/ss");
-                transactionsArray.append(transactionToAdd);
-            }
-            accountToAdd["transactionList"]= transactionsArray;
-            accountsArray.append(accountToAdd);
-        }
-        userObj["accounts"]=accountsArray;
-        mainArray.append(userObj);
-    }
-    mainObj["users"] = mainArray;
-    QJsonDocument mainDoc(mainObj);
-
-
-    file.open(QIODevice::WriteOnly);
-    file.write(mainDoc.toJson());
+    application.currentUser->editProfile(ui->nameLed->text(),ui->nCodeLed->text(),ui->BdateLed->date(),ui->usernameLed->text(),ui->passLed->text());
+    application.writeUsers();
+    application.refresh(application.getUserIndex());
+    message.setText("ویرایش اطلاعات موقیت آمیز بود ! ");
+    message.setWindowTitle("موفق");
+    message.show();
 
 }
 
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    application.refresh(application.getUserIndex());
+    ui->accountTable->clear();
+    ui->accountTable->setColumnCount(4);
+    ui->accountTable->setHorizontalHeaderLabels(headers);
+    ui->accountTable->setRowCount(0);
+    for(int i=0;i<application.currentUser->getAccount().size();i++)
+    {
+        if(strstr(application.currentUser->getAccount()[i].getAccountNumber().toUtf8().constData(),arg1.toUtf8().constData()))
+        {
+            ui->accountTable->insertRow(ui->accountTable->rowCount());
+            int row=ui->accountTable->rowCount()-1;
+            ui->accountTable->setItem(row,0,new QTableWidgetItem(application.currentUser->getAccount()[i].getAccountNumber()));
+            QString type;
+            if(application.currentUser->getAccount()[i].getType()==0)type="قرض الحسنه";
+            else if(application.currentUser->getAccount()[i].getType()==1)type="کوتاه مدت";   ///// SAVING=0 , SHORT_TERM=1 , SHORT_TERM_LEGAL=2 , LONG_TERM=3
+            else if(application.currentUser->getAccount()[i].getType()==2)type="کوتاه مدت حقوقی";
+            else if(application.currentUser->getAccount()[i].getType()==4)type="بلند مدت";
+            ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
+            ui->accountTable->setItem(row,2,new QTableWidgetItem(QString::number(application.currentUser->getAccount()[i].getBalance())));
+            QString status;
+            if(application.currentUser->getAccount()[i].getStatus()==0)status="فعال";
+            else if(application.currentUser->getAccount()[i].getStatus()==1)status="غیرفعال";      ///// ACTIVE=0 , BLOCK=1 , PENDIN2 , REJECT=3
+            else if(application.currentUser->getAccount()[i].getStatus()==2)status="درانتظار تایید";
+            else if(application.currentUser->getAccount()[i].getStatus()==4)status="رد شده";
+            ui->accountTable->setItem(row,3,new QTableWidgetItem(status));
+        }
+    }
+}
+
+void MainWindow::on_selectAccount_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("تایید");
+    msgBox.setText("آیا از انتخاب حساب :"+ui->accountTable->item(ui->accountTable->currentRow(),0)->text()+"مطمئن هستید ؟");
+    msgBox.setStandardButtons(QMessageBox::Yes);
+    msgBox.addButton(QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() == QMessageBox::Yes)
+    {
+        accountDialog=new AccountDialog();
+        connect(this,SIGNAL(sendCurrentAcc(QString)),accountDialog,SLOT(receiveAccount(QString)));
+        emit sendCurrentAcc(ui->accountTable->item(ui->accountTable->currentRow(),0)->text());
+        accountDialog->show();
+    }
+}
+
+void MainWindow::on_addAccount_clicked()
+{
+    addform=new addAccountDialog();
+    int a=addform->exec();
+    if(a==QDialog::Accepted)
+    {
+        BankAccount temp(addform->getBalance(),addform->getType());
+        application.currentUser->getAccountsPointer()->push_back(temp);
+        application.writeUsers();
+        application.refresh(application.getUserIndex());
+        on_lineEdit_textChanged("");
+    }
+}
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    if(index==2)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("آیا مطمئن هستید ؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
+        {
+            application.logout();
+            this->close();
+        }
+
+    }
+}

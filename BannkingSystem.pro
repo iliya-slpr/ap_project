@@ -16,6 +16,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    accountdialog.cpp \
+    addaccountdialog.cpp \
+    application.cpp \
     bankaccount.cpp \
     card.cpp \
     logindialog.cpp \
@@ -27,6 +30,9 @@ SOURCES += \
     user.cpp
 
 HEADERS += \
+    accountdialog.h \
+    addaccountdialog.h \
+    application.h \
     bankaccount.h \
     card.h \
     logindialog.h \
@@ -37,6 +43,8 @@ HEADERS += \
     user.h
 
 FORMS += \
+    accountdialog.ui \
+    addaccountdialog.ui \
     logindialog.ui \
     mainwindow.ui
 

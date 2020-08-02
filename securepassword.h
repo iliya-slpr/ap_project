@@ -1,8 +1,6 @@
 #ifndef SECUREPASSWORD_H
 #define SECUREPASSWORD_H
 #include <stdlib.h>
-#include <ctime>
-
 #include<QTime>
 #include <QDate>
 
@@ -16,6 +14,9 @@ public:
     SecurePassword();
     SecurePassword(unsigned int,QTime,QTime,QDate);
     int getPasswordOfSecPass();
+    QTime getExpireTime();
+    QTime getCreatedTime();
+    QDate getCreatedDate();
     bool isValid();
 };
 

@@ -26,6 +26,8 @@ public:
     Person();
     void editProfile(QString,QString,QDate,QString,QString);
     QVector<PersonalLog> getLog();
+    QVector<PersonalLog>* getLogPointer();
+    void setLogs(QVector<PersonalLog>);
     int getId();
     QString getFullName();
     QString getNationalCode();

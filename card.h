@@ -18,7 +18,8 @@ public:
     QString getCardNumber();
     int getcvv2();
     bool isExpire();
-    void getPassword();
+    void createPass();
+    SecurePassword getPassword();
     void changeStatusToPending();
     void changeStatusToReject();
     void changeStatusToActive();

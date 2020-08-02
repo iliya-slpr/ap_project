@@ -29,6 +29,14 @@ QVector<PersonalLog> Person::getLog()
 {
     return logs;
 }
+QVector<PersonalLog>* Person::getLogPointer()
+{
+    return &logs;
+}
+void Person::setLogs(QVector<PersonalLog> list)
+{
+    logs=list;
+}
 
 QDate Person::getBirthDate()
 {

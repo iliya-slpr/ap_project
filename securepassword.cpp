@@ -10,6 +10,7 @@ SecurePassword::SecurePassword()
         password = (rand()%1000000)+100000;
         validTime = QTime::currentTime().addSecs(120);
         createdDate=QDate::currentDate();
+        createdTime=QTime::currentTime();
 }
 SecurePassword::SecurePassword(unsigned int _password,QTime _createdTime,QTime _validTime,QDate _createdDate)
 {
@@ -18,7 +19,18 @@ SecurePassword::SecurePassword(unsigned int _password,QTime _createdTime,QTime _
         createdTime=_createdTime;
         createdDate=_createdDate;
 }
-
+QTime SecurePassword::getExpireTime()
+{
+    return validTime;
+}
+QTime SecurePassword::getCreatedTime()
+{
+    return createdTime;
+}
+QDate SecurePassword::getCreatedDate()
+{
+    return createdDate;
+}
 
 bool SecurePassword::isValid()
 {

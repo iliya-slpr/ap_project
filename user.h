@@ -14,6 +14,8 @@ public:
     User(QString,QString,QDate,QString,QString,QVector<PersonalLog>,bool,int,QVector<BankAccount>);
     User();
     QVector<BankAccount> getAccount();
+    QVector<BankAccount>* getAccountsPointer();
+    BankAccount* getAccountPointer(int i);
 
 };
 

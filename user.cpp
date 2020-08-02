@@ -18,5 +18,13 @@ QVector<BankAccount> User::getAccount()
 {
     return accounts;
 }
+QVector<BankAccount>* User::getAccountsPointer()
+{
+    return &accounts;
+}
+BankAccount* User::getAccountPointer(int i)
+{
+    return &accounts[i];
+}
 
 

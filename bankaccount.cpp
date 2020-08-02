@@ -36,6 +36,8 @@ BankAccount::BankAccount()
 void BankAccount::requestCard()
 {
     card.changeStatusToPending();
+    this->card=Card();
+    this->HasCard=true;
 }
 
 int BankAccount::getBalance()
@@ -51,6 +53,10 @@ bool BankAccount::hasACard()
 Card BankAccount::getCard()
 {
     return card;
+}
+Card* BankAccount::getCardPointer()
+{
+    return &card;
 }
 QString BankAccount::getAccountNumber()
 {
@@ -73,17 +79,38 @@ void BankAccount::plusBalance(int _toplus)
 {
     balance += _toplus;
 }
-bool BankAccount::transfer(BankAccount* _originAcc,BankAccount* _desAcc,unsigned int _amount)
+bool BankAccount::transfer(BankAccount* _desAcc,unsigned int _amount)
 {
 
-        _originAcc->minusBalance(_amount);
+        this->minusBalance(_amount);
         _desAcc->plusBalance(_amount);
-        transactionList.push_back(transaction(*_originAcc,*_desAcc,_amount,0));
-        _desAcc->transactionList.push_back(transaction(*_originAcc,*_desAcc,_amount,1));
+        transactionList.push_back(transaction(*this,*_desAcc,_amount,0));
+        _desAcc->transactionList.push_back(transaction(*this,*_desAcc,_amount,1));
         return 1;
 
 }
+QString BankAccount::getOwnerUsername()
+{
+    return owners[0].toUtf8().constData();
+}
+void BankAccount::changeStatusToActive()
+{
+    status = 0;
+}
 
+void BankAccount::changeStatusToBlock()
+{
+    status = 1;
+}
+
+void BankAccount::changeStatusToPending()
+{
+   status = 2;
+}
+void BankAccount::changeStatusToReject()
+{
+   status = 3;
+}
 transaction::transaction(BankAccount _originAcc,BankAccount _desAcc,unsigned int _amount,bool _type)
 {
     originAcc=_originAcc;

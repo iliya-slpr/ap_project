@@ -25,14 +25,19 @@ public:
     QString getAccountNumber();
     int getStatus();
     int getType();
-    bool hasCard();
-    bool transfer(BankAccount* _originAcc,BankAccount* _desAcc,unsigned int _amount);
+    bool transfer(BankAccount* _desAcc,unsigned int _amount);
     bool hasACard();
     QVector<transaction> getTransactions();
     Card getCard();
+    Card* getCardPointer();
     void minusBalance(int);
     void plusBalance(int);
-    QVector<int> owners;  
+    QVector<QString> owners;
+    QString getOwnerUsername();
+    void changeStatusToActive();
+    void changeStatusToBlock();
+    void changeStatusToPending();
+    void changeStatusToReject();
 };
 
 
@@ -55,5 +60,6 @@ public:
     QTime getTime();
     QDate getDate();
     bool getType();
+
 };
 #endif // BANKACCOUNT_H
