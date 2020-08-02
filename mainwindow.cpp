@@ -12,6 +12,16 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         if(result==QDialog::Accepted)
         {
+            if(login->getIsAdmin())
+            {
+                loginSeccess=application.login(login->getUsername(),login->getPassword());
+                application.writeUsers();
+                if(loginSeccess)
+                {
+                    isAdmin=true;
+                    return;
+                }
+            }
             loginSeccess=application.login(login->getUsername(),login->getPassword());
             application.writeUsers();
             if(loginSeccess)
@@ -59,10 +69,10 @@ void MainWindow::on_editProfileTab_tabBarClicked(int index)
             temp+=application.currentUser->getLog()[i].getLogTime().toString();
             temp+=application.currentUser->getLog()[i].getLogType()==0?" نوع: ورود":" نوع: خروج ";
             if(application.currentUser->getLog()[i].getLogType()==0)
-                ui->loginList->insertItem(i,new  QListWidgetItem(temp));
+                ui->loginList->insertItem(ui->loginList->count(),new  QListWidgetItem(temp));
             else
-                ui->logoutList->insertItem(i,new  QListWidgetItem(temp));
-            if(i<application.currentUser->getLog().size()-10)
+                ui->logoutList->insertItem(ui->loginList->count(),new  QListWidgetItem(temp));
+            if(i<application.currentUser->getLog().size()-20)
                 break;
 
         }
@@ -159,4 +169,8 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         }
 
     }
+}
+bool MainWindow::getIsAdmin()
+{
+    return isAdmin;
 }

@@ -16,6 +16,7 @@ public:
     ~loginDialog();
     QString getUsername();
     QString getPassword();
+    bool getIsAdmin();
 
 private slots:
     void on_buttonBox_rejected();

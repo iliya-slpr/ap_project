@@ -18,6 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     accountdialog.cpp \
     addaccountdialog.cpp \
+    adduser.cpp \
+    adminpanel.cpp \
     application.cpp \
     bankaccount.cpp \
     card.cpp \
@@ -27,11 +29,14 @@ SOURCES += \
     person.cpp \
     personallog.cpp \
     securepassword.cpp \
+    showlogs.cpp \
     user.cpp
 
 HEADERS += \
     accountdialog.h \
     addaccountdialog.h \
+    adduser.h \
+    adminpanel.h \
     application.h \
     bankaccount.h \
     card.h \
@@ -40,13 +45,17 @@ HEADERS += \
     person.h \
     personallog.h \
     securepassword.h \
+    showlogs.h \
     user.h
 
 FORMS += \
     accountdialog.ui \
     addaccountdialog.ui \
+    adduser.ui \
+    adminpanel.ui \
     logindialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    showlogs.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

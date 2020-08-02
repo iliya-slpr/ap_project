@@ -58,6 +58,10 @@ void Card::changeStatusToReject()
 {
    status = 3;
 }
+void Card::changeStatusToBlock()
+{
+    status=1;
+}
 QDate Card::getExpireDate()
 {
     return expireDate;

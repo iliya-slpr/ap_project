@@ -23,6 +23,7 @@ public:
     void changeStatusToPending();
     void changeStatusToReject();
     void changeStatusToActive();
+    void changeStatusToBlock();
     int getStatus();
     QDate getExpireDate();
 

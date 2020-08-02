@@ -30,6 +30,7 @@ public:
     void readUsers();
     void writeUsers();
     bool getLoginSeccess();
+    bool getIsAdmin();
 
 signals:
 void sendCurrentAcc(QString);
@@ -52,6 +53,7 @@ private:
     Application application;
     AccountDialog *accountDialog;
     bool loginSeccess=false;
+    bool isAdmin=false;
 //    User* currentUser;
 //    int userIndex;
     loginDialog * login;

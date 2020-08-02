@@ -59,6 +59,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QCheckBox" name="isAdminCheckBox">
+     <property name="text">
+      <string>مدیر</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">

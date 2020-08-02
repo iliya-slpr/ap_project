@@ -24,3 +24,7 @@ void loginDialog::on_buttonBox_rejected()
 {
     this->close();
 }
+bool loginDialog::getIsAdmin()
+{
+    return ui->isAdminCheckBox->isChecked();
+}
