@@ -17,7 +17,6 @@ AdminPanel::AdminPanel(QWidget *parent) :
 
     qDebug()<<":)";
     readUsers();
-    //User iliya("iliya" , "iliya",QDate::currentDate() , "iliya","iliya");
     ui->setupUi(this);
     setupUserTable();
     setupPendingAccountsTable();
@@ -31,8 +30,6 @@ AdminPanel::~AdminPanel()
 {
     delete ui;
 }
-
-
 void AdminPanel::readUsers()
 {
     QFile inFile("E:\\data.json");
@@ -78,7 +75,12 @@ void AdminPanel::readUsers()
                 int status=account.toObject().value("status").toInt();
                 int balance=account.toObject().value("balance").toInt();
                 bool hasCard=account.toObject().value("hasCard").toBool();
-
+                QJsonArray ownerslist=account.toObject().value("owners").toArray();
+                QStringList owners;
+                foreach(const QJsonValue & owner, ownerslist)
+                {
+                    owners.push_back(owner.toObject().value("username").toString());
+                }
                 QJsonObject cardObj=account.toObject().value("card").toObject();
                 unsigned int password=cardObj.value("secPass").toObject().value("password").toInt();
                 QDate createdDate=QDate::fromString(cardObj.value("secPass").toObject().value("createdDate").toString(),"dd/MM/yyyy");
@@ -110,7 +112,7 @@ void AdminPanel::readUsers()
                     transactionList.push_back(transaction(originAcc,desAcc,amount,type,time,date));
                 }
 
-                accounts.push_back(BankAccount(accountNumber,card,balance, type,status,hasCard,transactionList));
+                accounts.push_back(BankAccount(accountNumber,card,balance, type,status,hasCard,transactionList,owners));
 
             }
             userList.push_back(User(fullName,nCode,birthDate,username,password,logs,admin,id,accounts));
@@ -147,8 +149,9 @@ void AdminPanel::writeUsers()
             accountToAdd["type"]=userList[i].getAccount()[k].getType();
             accountToAdd["status"]=userList[i].getAccount()[k].getStatus();
             accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
-            QJsonObject cardObj;
-            if(userList[i].getAccount()[k].hasACard()){
+            if(userList[i].getAccount()[k].hasACard())
+            {
+                QJsonObject cardObj;
                 cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
                 cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
                 cardObj["status"]= userList[i].getAccount()[k].getCard().getStatus();
@@ -159,21 +162,16 @@ void AdminPanel::writeUsers()
                 pass["validTime"]=userList[i].getAccount()[k].getCard().getPassword().getExpireTime().toString("HH/mm/ss");
                 pass["createdDate"]=userList[i].getAccount()[k].getCard().getPassword().getCreatedDate().toString("dd/MM/yyyy");
                 cardObj["secPass"]= pass;
+                accountToAdd["card"]=cardObj;
             }
-            else {
-                cardObj["cardNumber"]= 0;
-                cardObj["cvv2"]= 0;
-                cardObj["expireDate"]= 0;
-                cardObj["secPass"]= 0;
-            }
+            else accountToAdd["card"]=0;
             QJsonArray ownersArray;
-            for(int m = 0 ; m< userList[i].getAccount()[k].owners.size();m++){
+            for(int m = 0 ; m< userList[i].getAccount()[k].getOwnerUsername().size();m++){
                 QJsonObject ownerToAdd;
-                ownerToAdd["personId"] = userList[i].getAccount()[k].owners[m];
+                ownerToAdd["username"] = userList[i].getAccount()[k].getOwnerUsername()[m];
                 ownersArray.append(ownerToAdd);
             }
             accountToAdd["owners"] = ownersArray;
-            accountToAdd["card"]=cardObj;
             QJsonArray transactionsArray;
             for(int l=0; l<userList[i].getAccount()[k].getTransactions().size();l++){
                 QJsonObject transactionToAdd;
@@ -283,7 +281,7 @@ void AdminPanel::setupPendingCardsTable()
 
     for(int i = 0 ; i < userList.size() ; i++){
         for(int j = 0 ; j < userList[i].getAccount().size() ; j++)
-            if(  userList[i].getAccount()[j].hasACard() && userList[i].getAccount()[j].getStatus()==2){
+            if(  userList[i].getAccount()[j].hasACard() && userList[i].getAccount()[j].getCard().getStatus()==2){
                 ui->pendingCardTable->insertRow(ui->pendingCardTable->rowCount());
                 ui->pendingCardTable->setItem(ROW_CP,0,new QTableWidgetItem(userList[i].getFullName()));
                 ui->pendingCardTable->setItem(ROW_CP,1,new QTableWidgetItem(userList[i].getNationalCode()));
@@ -295,8 +293,6 @@ void AdminPanel::setupPendingCardsTable()
 
             }
     }
-
-
 }
 
 void AdminPanel::setupTransactions(){
@@ -354,10 +350,6 @@ void AdminPanel::on_addUserBtn_clicked()
     d->show();
 }
 
-
-
-
-
 void AdminPanel::on_confirmBtn_clicked()
 {
     int userToAccept = ui->pendingAccountsTable->item(ui->pendingAccountsTable->currentRow(),5)->text().toInt();
@@ -396,8 +388,6 @@ void AdminPanel::on_rejeCardBtn_clicked()
     writeUsers();
 
 }
-
-
 
 void AdminPanel::on_logsBtn_clicked()
 {
@@ -544,11 +534,11 @@ void AdminPanel::changeCardStatus(QString nameToChange, int accountToChange)
 
 void AdminPanel::on_changeStatusBtn_clicked()
 {
-        if(ui->managementTable->item(ui->managementTable->currentRow(),3)->text()=="مسدود" || ui->managementTable->item(ui->managementTable->currentRow(),3)->text()=="فعال")
-            changeAccountStatus(ui->managementTable->item(ui->managementTable->currentRow(),0)->text(),(ui->managementTable->item(ui->managementTable->currentRow(),1)->text()).toInt());
+    if(ui->managementTable->item(ui->managementTable->currentRow(),3)->text()=="مسدود" || ui->managementTable->item(ui->managementTable->currentRow(),3)->text()=="فعال")
+        changeAccountStatus(ui->managementTable->item(ui->managementTable->currentRow(),0)->text(),(ui->managementTable->item(ui->managementTable->currentRow(),1)->text()).toInt());
 
 
-        writeUsers();
+    writeUsers();
 }
 
 void AdminPanel::on_changeCardStatusBtn_clicked()

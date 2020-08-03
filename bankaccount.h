@@ -14,10 +14,12 @@ class BankAccount
     int status;   ///// ACTIVE=0 , BLOCK=1 , PENDIN2 , REJECT=3
     bool HasCard;
     QVector<transaction> transactionList;
+    QStringList owners;
 
 public:
     BankAccount(int, int);
-    BankAccount(QString,Card,int, int,int,bool,QVector<transaction>);
+    BankAccount(int, int,QString);
+    BankAccount(QString,Card,int, int,int,bool,QVector<transaction>,QStringList);
     BankAccount(QString,int);
     BankAccount();
     void requestCard();
@@ -26,14 +28,14 @@ public:
     int getStatus();
     int getType();
     bool transfer(BankAccount* _desAcc,unsigned int _amount);
+    bool transfer(QString _desAcc,unsigned int _amount,int type);
     bool hasACard();
     QVector<transaction> getTransactions();
     Card getCard();
     Card* getCardPointer();
     void minusBalance(int);
     void plusBalance(int);
-    QVector<QString> owners;
-    QString getOwnerUsername();
+    QStringList getOwnerUsername();
     void changeStatusToActive();
     void changeStatusToBlock();
     void changeStatusToPending();

@@ -54,8 +54,6 @@ private:
     AccountDialog *accountDialog;
     bool loginSeccess=false;
     bool isAdmin=false;
-//    User* currentUser;
-//    int userIndex;
     loginDialog * login;
     QMessageBox message;
     Ui::MainWindow *ui;

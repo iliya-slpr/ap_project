@@ -10,6 +10,7 @@ addAccountDialog::addAccountDialog(QWidget *parent) :
     ui->TypeCombo->addItem("کوتاه مدت",1);
     ui->TypeCombo->addItem("کوتاه مدت حقوقی",2);
     ui->TypeCombo->addItem("بلند مدت",3);
+    ui->ownersLed->setDisabled(true);
 
 }
 addAccountDialog::~addAccountDialog()
@@ -24,4 +25,15 @@ int addAccountDialog::getBalance()
 int addAccountDialog::getType()
 {
     return ui->TypeCombo->currentData().toInt();
+}
+QString addAccountDialog::getOwners()
+{
+    return ui->ownersLed->text();
+}
+void addAccountDialog::on_TypeCombo_currentIndexChanged(int index)
+{
+    if(index==2)
+     ui->ownersLed->setDisabled(false);
+    else
+     ui->ownersLed->setDisabled(true);
 }

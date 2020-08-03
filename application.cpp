@@ -50,7 +50,12 @@ void Application::readUsers()
                 int status=account.toObject().value("status").toInt();
                 int balance=account.toObject().value("balance").toInt();
                 bool hasCard=account.toObject().value("hasCard").toBool();
-
+                QJsonArray ownerslist=account.toObject().value("owners").toArray();
+                QStringList owners;
+                foreach(const QJsonValue & owner, ownerslist)
+                {
+                    owners.push_back(owner.toObject().value("username").toString());
+                }
                 QJsonObject cardObj=account.toObject().value("card").toObject();
                 unsigned int password=cardObj.value("secPass").toObject().value("password").toInt();
                 QDate createdDate=QDate::fromString(cardObj.value("secPass").toObject().value("createdDate").toString(),"dd/MM/yyyy");
@@ -82,7 +87,7 @@ void Application::readUsers()
                     transactionList.push_back(transaction(originAcc,desAcc,amount,type,time,date));
                 }
 
-                accounts.push_back(BankAccount(accountNumber,card,balance, type,status,hasCard,transactionList));
+                accounts.push_back(BankAccount(accountNumber,card,balance, type,status,hasCard,transactionList,owners));
 
             }
             userList.push_back(User(fullName,nCode,birthDate,username,password,logs,admin,id,accounts));
@@ -119,8 +124,9 @@ void Application::writeUsers()
             accountToAdd["type"]=userList[i].getAccount()[k].getType();
             accountToAdd["status"]=userList[i].getAccount()[k].getStatus();
             accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
+            if(userList[i].getAccount()[k].hasACard())
+            {
             QJsonObject cardObj;
-            if(userList[i].getAccount()[k].hasACard()){
                 cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
                 cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
                 cardObj["status"]= userList[i].getAccount()[k].getCard().getStatus();
@@ -131,21 +137,16 @@ void Application::writeUsers()
                 pass["validTime"]=userList[i].getAccount()[k].getCard().getPassword().getExpireTime().toString("HH/mm/ss");
                 pass["createdDate"]=userList[i].getAccount()[k].getCard().getPassword().getCreatedDate().toString("dd/MM/yyyy");
                 cardObj["secPass"]= pass;
+                accountToAdd["card"]=cardObj;
             }
-            else {
-                cardObj["cardNumber"]= 0;
-                cardObj["cvv2"]= 0;
-                cardObj["expireDate"]= 0;
-                cardObj["secPass"]= 0;
-            }
+            else accountToAdd["card"]=0;
             QJsonArray ownersArray;
-            for(int m = 0 ; m< userList[i].getAccount()[k].owners.size();m++){
+            for(int m = 0 ; m< userList[i].getAccount()[k].getOwnerUsername().size();m++){
                 QJsonObject ownerToAdd;
-                ownerToAdd["personId"] = userList[i].getAccount()[k].owners[m];
+                ownerToAdd["username"] = userList[i].getAccount()[k].getOwnerUsername()[m];
                 ownersArray.append(ownerToAdd);
             }
             accountToAdd["owners"] = ownersArray;
-            accountToAdd["card"]=cardObj;
             QJsonArray transactionsArray;
             for(int l=0; l<userList[i].getAccount()[k].getTransactions().size();l++){
                 QJsonObject transactionToAdd;
@@ -204,6 +205,23 @@ BankAccount* Application::findAccount(QString accNum,int type)     //type// 0 se
     }
     return NULL;
 }
+BankAccount* Application::findAccount(QString accNum,QString username)     //type// 0 search global     1 search in current User
+{
+    for(int k=0;k<userList.size();k++)
+    {
+        if(userList[k].getUsername()==username)
+        {
+            for(int i=0;i<userList[k].getAccount().size();i++)
+            {
+                if(userList[k].getAccountPointer(i)->getAccountNumber()==accNum)
+                {
+                    return userList[k].getAccountPointer(i);
+                }
+            }
+        }
+    }
+    return NULL;
+}
 bool Application::login(QString username,QString password)
 {
     for(int i=0;i<userList.size();i++)
@@ -234,9 +252,9 @@ bool Application::login(QString username,QString password)
 
 void Application::logout()
 {
+    refresh(getUserIndex());
     currentUser->getLogPointer()->push_back(PersonalLog(1));
     writeUsers();
-    readUsers();
 }
 void Application::setCurrentUserAccount(QString accNum)
 {
@@ -288,3 +306,13 @@ int Application::getUserIndex()
     return userIndex;
 }
 
+User* Application::findUsername(QString user)
+{
+    for(int k=0;k<userList.size();k++)
+    {
+        if(userList[k].getUsername()==user)
+        {
+            return &userList[k];
+        }
+    }
+}

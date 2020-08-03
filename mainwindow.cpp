@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0);
+    ui->editProfileTab->setCurrentIndex(0);
     on_editProfileTab_tabBarClicked(0);
     on_editProfileTab_tabBarClicked(1);
     on_lineEdit_textChanged("");
@@ -103,14 +105,17 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
         {
             ui->accountTable->insertRow(ui->accountTable->rowCount());
             int row=ui->accountTable->rowCount()-1;
-            ui->accountTable->setItem(row,0,new QTableWidgetItem(application.currentUser->getAccount()[i].getAccountNumber()));
+            if(application.currentUser->getAccount()[i].getStatus()!=2)
+                ui->accountTable->setItem(row,0,new QTableWidgetItem(application.currentUser->getAccount()[i].getAccountNumber()));
             QString type;
             if(application.currentUser->getAccount()[i].getType()==0)type="قرض الحسنه";
             else if(application.currentUser->getAccount()[i].getType()==1)type="کوتاه مدت";   ///// SAVING=0 , SHORT_TERM=1 , SHORT_TERM_LEGAL=2 , LONG_TERM=3
             else if(application.currentUser->getAccount()[i].getType()==2)type="کوتاه مدت حقوقی";
             else if(application.currentUser->getAccount()[i].getType()==4)type="بلند مدت";
-            ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
-            ui->accountTable->setItem(row,2,new QTableWidgetItem(QString::number(application.currentUser->getAccount()[i].getBalance())));
+            if(application.currentUser->getAccount()[i].getStatus()!=2)
+                ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
+            if(application.currentUser->getAccount()[i].getStatus()!=2)
+                ui->accountTable->setItem(row,2,new QTableWidgetItem(QString::number(application.currentUser->getAccount()[i].getBalance())));
             QString status;
             if(application.currentUser->getAccount()[i].getStatus()==0)status="فعال";
             else if(application.currentUser->getAccount()[i].getStatus()==1)status="غیرفعال";      ///// ACTIVE=0 , BLOCK=1 , PENDIN2 , REJECT=3
@@ -144,8 +149,18 @@ void MainWindow::on_addAccount_clicked()
     int a=addform->exec();
     if(a==QDialog::Accepted)
     {
-        BankAccount temp(addform->getBalance(),addform->getType());
-        application.currentUser->getAccountsPointer()->push_back(temp);
+        application.refresh(application.getUserIndex());
+        BankAccount *temp;
+        if(addform->getBalance(),addform->getType(),addform->getOwners()!=NULL)
+            temp=new BankAccount(addform->getBalance(),addform->getType(),addform->getOwners()+","+application.currentUser->getUsername());
+        else
+            temp= new BankAccount(addform->getBalance(),addform->getType(),application.currentUser->getUsername());
+
+        for(int i=0;i<temp->getOwnerUsername().size();i++)
+        {
+            application.findUsername(temp->getOwnerUsername()[i])->getAccountsPointer()->push_back(*temp);
+        }
+        //application.currentUser->getAccountsPointer()->push_back(*temp);
         application.writeUsers();
         application.refresh(application.getUserIndex());
         on_lineEdit_textChanged("");
@@ -167,6 +182,10 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
             application.logout();
             this->close();
         }
+        else
+        {
+            ui->tabWidget->setCurrentIndex(1);
+        }
 
     }
 }
@@ -174,3 +193,4 @@ bool MainWindow::getIsAdmin()
 {
     return isAdmin;
 }
+

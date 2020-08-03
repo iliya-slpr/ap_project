@@ -16,6 +16,10 @@ public:
     ~addAccountDialog();
     int getBalance();
     int getType();
+    QString getOwners();
+
+private slots:
+    void on_TypeCombo_currentIndexChanged(int index);
 
 private:
     Ui::addAccountDialog *ui;

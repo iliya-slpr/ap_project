@@ -10,7 +10,8 @@ Person::Person(QString _fn , QString _nc, QDate _b, QString _u, QString _p)
     username = _u;
     password = _p;
     count++;
-    personId = count;
+    srand(time(0));
+    personId = (((long long int)rand())%1000000 + 100000);
 }
 Person::Person(QString _fn , QString _nc, QDate _b, QString _u, QString _p,bool _admin,int _personId)
 {

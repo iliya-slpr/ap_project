@@ -6,6 +6,7 @@ AccountDialog::AccountDialog(QWidget *parent) :
     ui(new Ui::AccountDialog)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(1);
 }
 
 AccountDialog::~AccountDialog()
@@ -37,7 +38,7 @@ void AccountDialog::on_tabWidget_tabBarClicked(int index)
             temp+=application.currentAccount->getTransactions()[j].getDate().toString();
             temp+=" ساعت : ";
             temp+=application.currentAccount->getTransactions()[j].getTime().toString();
-            temp+=application.currentAccount->getTransactions()[j].getType()==0?" نوع: واریز":" نوع: برداشت ";
+            temp+=application.currentAccount->getTransactions()[j].getType()==0?" نوع: برداشت":" نوع: واریز ";
             temp+=" مبلغ : ";
             temp+=QString::number(application.currentAccount->getTransactions()[j].getAmount());
             temp+=" از حساب ";
@@ -55,6 +56,11 @@ void AccountDialog::on_tabWidget_tabBarClicked(int index)
     {
         if(application.currentAccount->hasACard())
         {
+            if(application.currentAccount->getCard().getStatus()==2)
+            {
+                ui->statuslbl->setText("درخواست شما ثبت و در دست بررسی است");
+                return;
+            }
             ui->cardNumlbl->setText(application.currentAccount->getCard().getCardNumber());
             ui->cvv2lbl->setText(QString::number(application.currentAccount->getCard().getcvv2()));
             QString temp;
@@ -73,28 +79,77 @@ void AccountDialog::on_transferBtn_clicked()
 {
     application.refresh(currentAccNum);
     BankAccount* desAccount=application.findAccount(ui->accNum->text(),0);
-    User* desUser=application.findUser(ui->accNum->text());
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("تایید");
-    msgBox.setText("آیا از انتقال وجه به حساب :"+desUser->getFullName()+"مطمئن هستید ؟");
-    msgBox.setStandardButtons(QMessageBox::Yes);
-    msgBox.addButton(QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
-    if(msgBox.exec() == QMessageBox::Yes)
+    if((application.currentAccount->getType()==0||application.currentAccount->getType()==1)&&(desAccount->getType()==0||desAccount->getType()==1))
     {
-        application.currentAccount->transfer(desAccount,ui->amount->text().toInt());
-        message.setText("انتقال با موفقیت انجام شد !");
-        application.writeUsers();
-        application.refresh(currentAccNum);
-        on_tabWidget_tabBarClicked(0);
-        message.setWindowTitle("موفق");
-        if(message.exec() == QMessageBox::Ok)
+        User* desUser=application.findUser(ui->accNum->text());
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("آیا از انتقال وجه به حساب :"+desUser->getFullName()+"مطمئن هستید ؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
         {
-            transfered=true;
-            ui->amount->setText("");
-            ui->accNum->setText("");
+            application.currentAccount->transfer(desAccount,ui->amount->text().toInt());
+            message.setText("انتقال با موفقیت انجام شد !");
+            application.writeUsers();
+            application.refresh(currentAccNum);
+            on_tabWidget_tabBarClicked(0);
+            message.setWindowTitle("موفق");
+            if(message.exec() == QMessageBox::Ok)
+            {
+                transfered=true;
+                ui->amount->setText("");
+                ui->accNum->setText("");
+            }
+        }
+        return;
+    }
+    if(application.currentAccount->getType()==2)
+    {
+        for(int i=0;i<application.currentAccount->getOwnerUsername().size();i++)
+        {
+            BankAccount* temp1=application.findAccount(currentAccNum,application.currentAccount->getOwnerUsername()[i]);
+            temp1->minusBalance(ui->amount->text().toInt());
+            temp1->transfer(desAccount->getAccountNumber(),ui->amount->text().toInt(),0);
         }
     }
+    else
+    {
+        application.currentAccount->minusBalance(ui->amount->text().toInt());
+        application.currentAccount->transfer(desAccount->getAccountNumber(),ui->amount->text().toInt(),0);
+    }
+    if(desAccount->getType()==2)
+    {
+        for(int i=0;i<desAccount->getOwnerUsername().size();i++)
+        {
+            BankAccount* temp2=application.findAccount(desAccount->getAccountNumber(),desAccount->getOwnerUsername()[i]);
+            temp2->plusBalance(ui->amount->text().toInt());
+            temp2->transfer(currentAccNum,ui->amount->text().toInt(),1);
+        }
+    }
+    else
+    {
+        User* desUser=application.findUser(ui->accNum->text());
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("آیا از انتقال وجه به حساب :"+desUser->getFullName()+"مطمئن هستید ؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
+        {
+        desAccount->plusBalance(ui->amount->text().toInt());
+        desAccount->transfer(application.currentAccount->getAccountNumber(),ui->amount->text().toInt(),1);
+        }
+    }
+    message.setText("انتقال وجه با موفقیت انجام شد !");
+    message.setWindowTitle("موفق");
+    message.show();
+    ui->accNum->setText("");
+    ui->amount->setText("");
+    application.writeUsers();
+    application.refresh(currentAccNum);
 }
 
 void AccountDialog::on_cardbtn_clicked()

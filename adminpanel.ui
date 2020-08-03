@@ -641,7 +641,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="usersTab">
        <property name="enabled">
@@ -805,14 +805,14 @@
           <item>
            <widget class="QPushButton" name="rejeCardBtn">
             <property name="text">
-             <string>رد حساب</string>
+             <string>رد کارت</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="confirmCardBtn">
             <property name="text">
-             <string>تایید حساب</string>
+             <string>تایید کارت</string>
             </property>
            </widget>
           </item>

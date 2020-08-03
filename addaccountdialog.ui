@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>127</height>
+    <height>180</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,6 +40,30 @@
       <widget class="QComboBox" name="TypeCombo">
        <property name="modelColumn">
         <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>صاحبان حساب</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="ownersLed"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>با , از هم جدا کنید !</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>راهنما:</string>
        </property>
       </widget>
      </item>

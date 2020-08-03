@@ -20,7 +20,9 @@ public:
     void readUsers();
     void writeUsers();
     BankAccount* findAccount(QString,int);
+    BankAccount* findAccount(QString,QString);
     User* findUser(QString);
+    User* findUsername(QString);
     bool login(QString username,QString password);
     void logout();
     void setCurrentUserAccount(QString accNum);

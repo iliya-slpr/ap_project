@@ -13,7 +13,17 @@ BankAccount::BankAccount(int _b, int _t)
     status = 2;
     HasCard = false;
 }
-BankAccount::BankAccount(QString _accountNumber,Card _card,int _balance, int _type,int _status,bool _hasCard,QVector<transaction>_transactionList)
+BankAccount::BankAccount(int _b, int _t,QString _owners)
+{
+    srand(time(0));
+    accountNumber = QString::number((((long long int)rand())%10000 + 100000));
+    balance = _b;
+    type = _t;
+    status = 2;
+    HasCard = false;
+    owners=_owners.split(',');
+}
+BankAccount::BankAccount(QString _accountNumber,Card _card,int _balance, int _type,int _status,bool _hasCard,QVector<transaction>_transactionList,QStringList _owners)
 {
     balance = _balance;
     type = _type;
@@ -22,12 +32,13 @@ BankAccount::BankAccount(QString _accountNumber,Card _card,int _balance, int _ty
     accountNumber=_accountNumber;
     card=_card;
     transactionList=_transactionList;
+    owners=_owners;
 }
 
 BankAccount::BankAccount(QString _accountNumber,int _balance)
 {
-     balance = _balance;
-     accountNumber=_accountNumber;
+    balance = _balance;
+    accountNumber=_accountNumber;
 }
 BankAccount::BankAccount()
 {
@@ -82,16 +93,24 @@ void BankAccount::plusBalance(int _toplus)
 bool BankAccount::transfer(BankAccount* _desAcc,unsigned int _amount)
 {
 
-        this->minusBalance(_amount);
-        _desAcc->plusBalance(_amount);
-        transactionList.push_back(transaction(*this,*_desAcc,_amount,0));
-        _desAcc->transactionList.push_back(transaction(*this,*_desAcc,_amount,1));
-        return 1;
+    this->minusBalance(_amount);
+    _desAcc->plusBalance(_amount);
+    transactionList.push_back(transaction(*this,*_desAcc,_amount,0));
+    _desAcc->transactionList.push_back(transaction(*this,*_desAcc,_amount,1));
+    return 1;
 
 }
-QString BankAccount::getOwnerUsername()
+bool BankAccount::transfer(QString _desAcc,unsigned int _amount,int type)    ///0 send 1 receive
 {
-    return owners[0].toUtf8().constData();
+    if(type==0)
+        transactionList.push_back(transaction(*this,BankAccount(_desAcc,balance),_amount,type));
+    else if(type==1)
+        transactionList.push_back(transaction(BankAccount(_desAcc,balance),*this,_amount,type));
+    return 1;
+}
+QStringList BankAccount::getOwnerUsername()
+{
+    return owners;
 }
 void BankAccount::changeStatusToActive()
 {
@@ -105,11 +124,11 @@ void BankAccount::changeStatusToBlock()
 
 void BankAccount::changeStatusToPending()
 {
-   status = 2;
+    status = 2;
 }
 void BankAccount::changeStatusToReject()
 {
-   status = 3;
+    status = 3;
 }
 transaction::transaction(BankAccount _originAcc,BankAccount _desAcc,unsigned int _amount,bool _type)
 {
