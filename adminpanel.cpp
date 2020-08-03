@@ -151,7 +151,7 @@ void AdminPanel::writeUsers()
             accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
             if(userList[i].getAccount()[k].hasACard())
             {
-                QJsonObject cardObj;
+            QJsonObject cardObj;
                 cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
                 cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
                 cardObj["status"]= userList[i].getAccount()[k].getCard().getStatus();

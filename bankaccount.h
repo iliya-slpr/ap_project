@@ -40,6 +40,7 @@ public:
     void changeStatusToBlock();
     void changeStatusToPending();
     void changeStatusToReject();
+    void changeTypeToShortTerm();
 };
 
 

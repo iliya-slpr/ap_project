@@ -8,6 +8,7 @@ Card::Card()
     cardNumber = QString::number((((long long int)rand())%100000000 + 1000000000));
     cvv2 = (rand()%10000)+1000;
     expireDate = QDate::currentDate().addYears(4);
+    status=2;
 }
 Card::Card(QString _cardNumber,int _cvv2,QDate _expireDate,SecurePassword _secPass,int _status)
 {

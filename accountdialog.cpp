@@ -79,30 +79,45 @@ void AccountDialog::on_transferBtn_clicked()
 {
     application.refresh(currentAccNum);
     BankAccount* desAccount=application.findAccount(ui->accNum->text(),0);
-    if((application.currentAccount->getType()==0||application.currentAccount->getType()==1)&&(desAccount->getType()==0||desAccount->getType()==1))
+    if(desAccount==NULL)
     {
-        User* desUser=application.findUser(ui->accNum->text());
+        message.setText("حساب مورد نظر یافت نشد");
+        message.setWindowTitle("خطا");
+        message.show();
+        return;
+    }
+    if(application.currentAccount->getType()==3)
+    {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("تایید");
-        msgBox.setText("آیا از انتقال وجه به حساب :"+desUser->getFullName()+"مطمئن هستید ؟");
+        msgBox.setWindowTitle("هشدار");
+        msgBox.setText("حساب شما بلند مدت بوده و با این انتقال به سپرده کوتاه مدت تبدیل میشود ، آیا مطمئن هستید ؟");
         msgBox.setStandardButtons(QMessageBox::Yes);
         msgBox.addButton(QMessageBox::No);
         msgBox.setDefaultButton(QMessageBox::No);
-        if(msgBox.exec() == QMessageBox::Yes)
+        if(msgBox.exec() == QMessageBox::No)
         {
-            application.currentAccount->transfer(desAccount,ui->amount->text().toInt());
-            message.setText("انتقال با موفقیت انجام شد !");
-            application.writeUsers();
-            application.refresh(currentAccNum);
-            on_tabWidget_tabBarClicked(0);
-            message.setWindowTitle("موفق");
-            if(message.exec() == QMessageBox::Ok)
-            {
-                transfered=true;
-                ui->amount->setText("");
-                ui->accNum->setText("");
-            }
+            message.setText("عملیات لغو شد");
+            message.setWindowTitle("نتیجه");
+            message.show();
+            return;
         }
+        else
+        {
+            application.currentAccount->changeTypeToShortTerm();
+        }
+    }
+    if(application.currentAccount->getBalance()<ui->amount->text().toInt())
+    {
+        message.setText("موجودی شما برای این انتقال کافی نیست !");
+        message.setWindowTitle("خطا");
+        message.show();
+        return;
+    }
+    if(desAccount->getStatus()!=0)
+    {
+        message.setText("حساب مقصد فعال نیست");
+        message.setWindowTitle("خطا");
+        message.show();
         return;
     }
     if(application.currentAccount->getType()==2)
@@ -121,11 +136,20 @@ void AccountDialog::on_transferBtn_clicked()
     }
     if(desAccount->getType()==2)
     {
-        for(int i=0;i<desAccount->getOwnerUsername().size();i++)
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("آیا از انتقال وجه به حساب حقوقی مطمئن هستید ؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
         {
-            BankAccount* temp2=application.findAccount(desAccount->getAccountNumber(),desAccount->getOwnerUsername()[i]);
-            temp2->plusBalance(ui->amount->text().toInt());
-            temp2->transfer(currentAccNum,ui->amount->text().toInt(),1);
+            for(int i=0;i<desAccount->getOwnerUsername().size();i++)
+            {
+                BankAccount* temp2=application.findAccount(desAccount->getAccountNumber(),desAccount->getOwnerUsername()[i]);
+                temp2->plusBalance(ui->amount->text().toInt());
+                temp2->transfer(currentAccNum,ui->amount->text().toInt(),1);
+            }
         }
     }
     else
@@ -139,8 +163,8 @@ void AccountDialog::on_transferBtn_clicked()
         msgBox.setDefaultButton(QMessageBox::No);
         if(msgBox.exec() == QMessageBox::Yes)
         {
-        desAccount->plusBalance(ui->amount->text().toInt());
-        desAccount->transfer(application.currentAccount->getAccountNumber(),ui->amount->text().toInt(),1);
+            desAccount->plusBalance(ui->amount->text().toInt());
+            desAccount->transfer(application.currentAccount->getAccountNumber(),ui->amount->text().toInt(),1);
         }
     }
     message.setText("انتقال وجه با موفقیت انجام شد !");
@@ -154,20 +178,55 @@ void AccountDialog::on_transferBtn_clicked()
 
 void AccountDialog::on_cardbtn_clicked()
 {
-    application.currentAccount->requestCard();
-    application.writeUsers();
-    application.refresh(currentAccNum);
-    message.setText("درخواست شما ثبت و در لیست انتظار تایید مدیر قرار گرفت");
-    message.setWindowTitle("تایید");
-    message.show();
-    on_tabWidget_tabBarClicked(3);
+    if(application.currentAccount->getType()!=3)
+    {
+        application.refresh(currentAccNum);
+        application.currentAccount->requestCard();
+        application.writeUsers();
+        application.refresh(currentAccNum);
+        message.setText("درخواست شما ثبت و در لیست انتظار تایید مدیر قرار گرفت");
+        message.setWindowTitle("تایید");
+        message.show();
+        on_tabWidget_tabBarClicked(3);
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("حساب شما سپرده سرمایه گذاری بلند مدت است و با دریافت کارت به سپرده کوتاه مدت تبدیل میشود، آیا مطمئن هستید؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
+        {
+            application.refresh(currentAccNum);
+            application.currentAccount->requestCard();
+            application.currentAccount->changeTypeToShortTerm();
+            application.writeUsers();
+            application.refresh(currentAccNum);
+            message.setText("درخواست شما ثبت و در لیست انتظار تایید مدیر قرار گرفت");
+            message.setWindowTitle("تایید");
+            message.show();
+            on_tabWidget_tabBarClicked(3);
+        }
+    }
 }
 
 void AccountDialog::on_pushButton_clicked()
 {
-    application.currentAccount->getCardPointer()->createPass();
-    ui->passLbl->setText(QString::number(application.currentAccount->getCardPointer()->getPassword().getPasswordOfSecPass()));
-    ui->passDatelbl->setText(application.currentAccount->getCardPointer()->getPassword().getExpireTime().toString());
-    application.writeUsers();
-    application.refresh(currentAccNum);
+    if(application.currentAccount->hasACard())
+    {
+        application.currentAccount->getCardPointer()->createPass();
+        ui->passLbl->setText(QString::number(application.currentAccount->getCardPointer()->getPassword().getPasswordOfSecPass()));
+        ui->passDatelbl->setText(application.currentAccount->getCardPointer()->getPassword().getExpireTime().toString());
+        application.writeUsers();
+        application.refresh(currentAccNum);
+    }
+    else
+    {
+        message.setText("شما کارت فعال ندارید !");
+        message.setWindowTitle("خطا");
+        message.show();
+    }
+
 }

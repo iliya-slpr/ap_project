@@ -46,7 +46,6 @@ BankAccount::BankAccount()
 
 void BankAccount::requestCard()
 {
-    card.changeStatusToPending();
     this->card=Card();
     this->HasCard=true;
 }
@@ -107,6 +106,10 @@ bool BankAccount::transfer(QString _desAcc,unsigned int _amount,int type)    ///
     else if(type==1)
         transactionList.push_back(transaction(BankAccount(_desAcc,balance),*this,_amount,type));
     return 1;
+}
+void BankAccount::changeTypeToShortTerm()
+{
+    type=1;
 }
 QStringList BankAccount::getOwnerUsername()
 {

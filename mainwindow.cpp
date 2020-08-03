@@ -107,11 +107,13 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
             int row=ui->accountTable->rowCount()-1;
             if(application.currentUser->getAccount()[i].getStatus()!=2)
                 ui->accountTable->setItem(row,0,new QTableWidgetItem(application.currentUser->getAccount()[i].getAccountNumber()));
+            else
+                ui->accountTable->setItem(row,0,new QTableWidgetItem("درحال بررسی"));
             QString type;
             if(application.currentUser->getAccount()[i].getType()==0)type="قرض الحسنه";
             else if(application.currentUser->getAccount()[i].getType()==1)type="کوتاه مدت";   ///// SAVING=0 , SHORT_TERM=1 , SHORT_TERM_LEGAL=2 , LONG_TERM=3
             else if(application.currentUser->getAccount()[i].getType()==2)type="کوتاه مدت حقوقی";
-            else if(application.currentUser->getAccount()[i].getType()==4)type="بلند مدت";
+            else if(application.currentUser->getAccount()[i].getType()==3)type="بلند مدت";
             if(application.currentUser->getAccount()[i].getStatus()!=2)
                 ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
             if(application.currentUser->getAccount()[i].getStatus()!=2)
@@ -120,10 +122,11 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
             if(application.currentUser->getAccount()[i].getStatus()==0)status="فعال";
             else if(application.currentUser->getAccount()[i].getStatus()==1)status="غیرفعال";      ///// ACTIVE=0 , BLOCK=1 , PENDIN2 , REJECT=3
             else if(application.currentUser->getAccount()[i].getStatus()==2)status="درانتظار تایید";
-            else if(application.currentUser->getAccount()[i].getStatus()==4)status="رد شده";
+            else if(application.currentUser->getAccount()[i].getStatus()==3)status="رد شده";
             ui->accountTable->setItem(row,3,new QTableWidgetItem(status));
         }
     }
+    ui->accountTable->setCurrentCell(0,0);
 }
 
 void MainWindow::on_selectAccount_clicked()
@@ -194,3 +197,11 @@ bool MainWindow::getIsAdmin()
     return isAdmin;
 }
 
+
+void MainWindow::on_accountTable_cellClicked(int row, int column)
+{
+    if(application.findAccount(ui->accountTable->item(row,0)->text(),1)->getStatus()!=0)
+        ui->selectAccount->setDisabled(true);
+    else
+        ui->selectAccount->setDisabled(false);
+}

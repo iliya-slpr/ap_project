@@ -48,6 +48,8 @@ private slots:
 
     void on_tabWidget_tabBarClicked(int index);
 
+    void on_accountTable_cellClicked(int row, int column);
+
 private:
     addAccountDialog *addform;
     Application application;
