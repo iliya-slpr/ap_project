@@ -2,6 +2,7 @@
 
 Application::Application()
 {
+    crypt.setKey(10000);
     readUsers();
 }
 
@@ -26,64 +27,62 @@ void Application::readUsers()
         foreach(const QJsonValue & val, ptsArray)
         {
             int id= val.toObject().value("personId").toInt();
-            QString fullName =val.toObject().value("fullName").toString();
-            QString username=val.toObject().value("username").toString();
-            QString password=val.toObject().value("password").toString();
-            QString nCode=val.toObject().value("nCode").toString();
+            QString fullName =crypt.decryptToString(val.toObject().value("fullName").toString());
+            QString username=crypt.decryptToString(val.toObject().value("username").toString());
+            QString password=crypt.decryptToString(val.toObject().value("password").toString());
+            QString nCode = crypt.decryptToString(val.toObject().value("nCode").toString());
             bool admin=val.toObject().value("admin").toBool();
-            QDate birthDate = QDate::fromString(val.toObject().value("birthDate").toString(),"dd/MM/yyyy");
+            QDate birthDate = QDate::fromString(crypt.decryptToString(val.toObject().value("birthDate").toString()),"dd/MM/yyyy");
             QVector<PersonalLog> logs;
             QJsonArray logArray=val.toObject().value("logs").toArray();
             foreach(const QJsonValue & log, logArray)
             {
                 logs.push_back(PersonalLog(QDate::fromString(log.toObject().value("logDate").toString(),"dd/MM/yyyy"),QTime::fromString(log.toObject().value("logTime").toString(),"HH/mm/ss"),log.toObject().value("logType").toBool()));
             }
-
-
             QVector<BankAccount> accounts;
             QJsonArray accountArray=val.toObject().value("accounts").toArray();
 
             foreach(const QJsonValue & account, accountArray)
             {
-                QString accountNumber =account.toObject().value("accountNumber").toString();
+                QString accountNumber =crypt.decryptToString(account.toObject().value("accountNumber").toString());
                 int type=account.toObject().value("type").toInt();
                 int status=account.toObject().value("status").toInt();
-                int balance=account.toObject().value("balance").toInt();
+                int balance=crypt.decryptToString(account.toObject().value("balance").toString()).toInt();
                 bool hasCard=account.toObject().value("hasCard").toBool();
                 QJsonArray ownerslist=account.toObject().value("owners").toArray();
                 QStringList owners;
                 foreach(const QJsonValue & owner, ownerslist)
                 {
-                    owners.push_back(owner.toObject().value("username").toString());
+                    owners.push_back(crypt.decryptToString(owner.toObject().value("username").toString()));
                 }
                 QJsonObject cardObj=account.toObject().value("card").toObject();
-                unsigned int password=cardObj.value("secPass").toObject().value("password").toInt();
-                QDate createdDate=QDate::fromString(cardObj.value("secPass").toObject().value("createdDate").toString(),"dd/MM/yyyy");
-                QTime createdTime=QTime::fromString(cardObj.value("secPass").toObject().value("createdTime").toString(),"HH/mm/ss");
-                QTime validTime=QTime::fromString(cardObj.value("secPass").toObject().value("validTime").toString(),"HH/mm/ss");
+                unsigned int password=crypt.decryptToString(cardObj.value("secPass").toObject().value("password").toString()).toUInt();
+                QDate createdDate=QDate::fromString(crypt.decryptToString(cardObj.value("secPass").toObject().value("createdDate").toString()),"dd/MM/yyyy");
+                QTime createdTime=QTime::fromString(crypt.decryptToString(cardObj.value("secPass").toObject().value("createdTime").toString()),"HH/mm/ss");
+                QTime validTime=QTime::fromString(crypt.decryptToString(cardObj.value("secPass").toObject().value("validTime").toString()),"HH/mm/ss");
                 int cardStatus=cardObj.value("status").toInt();
-                int cvv2=cardObj.value("cvv2").toInt();
-                QString cardNumber =cardObj.value("cardNumber").toString();
-                QDate expireDate=QDate::fromString(cardObj.value("expireDate").toString(),"dd/MM/yyyy");
+                int cvv2=crypt.decryptToString(cardObj.value("cvv2").toString()).toInt();
+                QString cardNumber =crypt.decryptToString(cardObj.value("cardNumber").toString());
+                QDate expireDate=QDate::fromString(crypt.decryptToString(cardObj.value("expireDate").toString()),"dd/MM/yyyy");
                 Card card=Card(cardNumber,cvv2,expireDate,SecurePassword(password,createdTime,validTime,createdDate),cardStatus);
                 QVector<transaction> transactionList;
                 QJsonArray transactionArray=account.toObject().value("transactionList").toArray();
                 foreach(const QJsonValue & Transaction, transactionArray)
                 {
                     QJsonObject _originAcc=Transaction.toObject().value("originAcc").toObject();
-                    QString originAccountNumber =_originAcc.value("accountNumber").toString();
-                    int originAccountBalance =_originAcc.value("balance").toInt();
+                    QString originAccountNumber =crypt.decryptToString(_originAcc.value("accountNumber").toString());
+                    int originAccountBalance =crypt.decryptToString(_originAcc.value("balance").toString()).toInt();
                     QJsonObject _desAcc=Transaction.toObject().value("desAcc").toObject();
-                    QString desAccountNumber =_desAcc.value("accountNumber").toString();
-                    int desAccountBalance =_desAcc.value("balance").toInt();
+                    QString desAccountNumber =crypt.decryptToString(_desAcc.value("accountNumber").toString());
+                    int desAccountBalance =crypt.decryptToString(_desAcc.value("balance").toString()).toInt();
 
 
                     BankAccount originAcc(originAccountNumber,originAccountBalance);
                     BankAccount desAcc(desAccountNumber,desAccountBalance);
-                    int amount=Transaction.toObject().value("amount").toInt();
+                    int amount=crypt.decryptToString(Transaction.toObject().value("amount").toString()).toInt();
                     bool type=Transaction.toObject().value("type").toBool();
-                    QDate date = QDate::fromString(Transaction.toObject().value("trDate").toString(),"dd/MM/yyyy");
-                    QTime time = QTime::fromString(Transaction.toObject().value("trTime").toString(),"HH/mm/ss");
+                    QDate date = QDate::fromString(crypt.decryptToString(Transaction.toObject().value("trDate").toString()),"dd/MM/yyyy");
+                    QTime time = QTime::fromString(crypt.decryptToString(Transaction.toObject().value("trTime").toString()),"HH/mm/ss");
                     transactionList.push_back(transaction(originAcc,desAcc,amount,type,time,date));
                 }
 
@@ -102,11 +101,11 @@ void Application::writeUsers()
     for(int i = 0 ; i<userList.size() ; i++){
         QJsonObject userObj;
         userObj["personId"]=userList[i].getId();
-        userObj["fullName"]=userList[i].getFullName();
-        userObj["nCode"]=userList[i].getNationalCode();
-        userObj["birthDate"]=userList[i].getBirthDate().toString("dd/MM/yyyy");
-        userObj["username"]=userList[i].getUsername();
-        userObj["password"]=userList[i].getPassword();
+        userObj["fullName"]=crypt.encryptToString(userList[i].getFullName());
+        userObj["nCode"]=crypt.encryptToString(userList[i].getNationalCode());
+        userObj["birthDate"]=crypt.encryptToString(userList[i].getBirthDate().toString("dd/MM/yyyy"));
+        userObj["username"]=crypt.encryptToString(userList[i].getUsername());
+        userObj["password"]=crypt.encryptToString(userList[i].getPassword());
         QJsonArray logsArray;
         for(int j = 0 ; j < userList[i].getLog().size(); j++){
             QJsonObject logToAdd;
@@ -119,23 +118,23 @@ void Application::writeUsers()
         QJsonArray accountsArray;
         for(int k=0 ; k < userList[i].getAccount().size() ; k++){
             QJsonObject accountToAdd;
-            accountToAdd["accountNumber"]=userList[i].getAccount()[k].getAccountNumber();
-            accountToAdd["balance"]=userList[i].getAccount()[k].getBalance();
+            accountToAdd["accountNumber"]=crypt.encryptToString(userList[i].getAccount()[k].getAccountNumber());
+            accountToAdd["balance"]=crypt.encryptToString(QString::number(userList[i].getAccount()[k].getBalance()));
             accountToAdd["type"]=userList[i].getAccount()[k].getType();
             accountToAdd["status"]=userList[i].getAccount()[k].getStatus();
             accountToAdd["hasCard"]=userList[i].getAccount()[k].hasACard();
             if(userList[i].getAccount()[k].hasACard())
             {
-            QJsonObject cardObj;
-                cardObj["cardNumber"]= userList[i].getAccount()[k].getCard().getCardNumber();
-                cardObj["cvv2"]= userList[i].getAccount()[k].getCard().getcvv2();
+                QJsonObject cardObj;
+                cardObj["cardNumber"]= crypt.encryptToString(userList[i].getAccount()[k].getCard().getCardNumber());
+                cardObj["cvv2"]= crypt.encryptToString(QString::number(userList[i].getAccount()[k].getCard().getcvv2()));
                 cardObj["status"]= userList[i].getAccount()[k].getCard().getStatus();
-                cardObj["expireDate"]= userList[i].getAccount()[k].getCard().getExpireDate().toString("dd/MM/yyyy");
+                cardObj["expireDate"]=crypt.encryptToString(userList[i].getAccount()[k].getCard().getExpireDate().toString("dd/MM/yyyy"));
                 QJsonObject pass;
-                pass["password"]=userList[i].getAccount()[k].getCard().getPassword().getPasswordOfSecPass();
-                pass["createdTime"]=userList[i].getAccount()[k].getCard().getPassword().getCreatedTime().toString("HH/mm/ss");
-                pass["validTime"]=userList[i].getAccount()[k].getCard().getPassword().getExpireTime().toString("HH/mm/ss");
-                pass["createdDate"]=userList[i].getAccount()[k].getCard().getPassword().getCreatedDate().toString("dd/MM/yyyy");
+                pass["password"]=crypt.encryptToString(QString::number(userList[i].getAccount()[k].getCard().getPassword().getPasswordOfSecPass()));
+                pass["createdTime"]=crypt.encryptToString(userList[i].getAccount()[k].getCard().getPassword().getCreatedTime().toString("HH/mm/ss"));
+                pass["validTime"]=crypt.encryptToString(userList[i].getAccount()[k].getCard().getPassword().getExpireTime().toString("HH/mm/ss"));
+                pass["createdDate"]=crypt.encryptToString(userList[i].getAccount()[k].getCard().getPassword().getCreatedDate().toString("dd/MM/yyyy"));
                 cardObj["secPass"]= pass;
                 accountToAdd["card"]=cardObj;
             }
@@ -143,7 +142,7 @@ void Application::writeUsers()
             QJsonArray ownersArray;
             for(int m = 0 ; m< userList[i].getAccount()[k].getOwnerUsername().size();m++){
                 QJsonObject ownerToAdd;
-                ownerToAdd["username"] = userList[i].getAccount()[k].getOwnerUsername()[m];
+                ownerToAdd["username"] = crypt.encryptToString(userList[i].getAccount()[k].getOwnerUsername()[m]);
                 ownersArray.append(ownerToAdd);
             }
             accountToAdd["owners"] = ownersArray;
@@ -152,16 +151,16 @@ void Application::writeUsers()
                 QJsonObject transactionToAdd;
                 transactionToAdd["type"] = userList[i].getAccount()[k].getTransactions()[l].getType();
                 QJsonObject originAcc;
-                originAcc["accountNumber"]=userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getAccountNumber();
-                originAcc["balance"]=userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getBalance();
+                originAcc["accountNumber"]=crypt.encryptToString(userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getAccountNumber());
+                originAcc["balance"]=crypt.encryptToString(QString::number(userList[i].getAccount()[k].getTransactions()[l].getOriginBankAcc().getBalance()));
                 transactionToAdd["originAcc"] = originAcc;
                 QJsonObject desAcc;
-                desAcc["accountNumber"]=userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getAccountNumber();
-                desAcc["balance"]=userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getBalance();
+                desAcc["accountNumber"]=crypt.encryptToString(userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getAccountNumber());
+                desAcc["balance"]=crypt.encryptToString(QString::number(userList[i].getAccount()[k].getTransactions()[l].getDesBankAcc().getBalance()));
                 transactionToAdd["desAcc"] = desAcc;
-                transactionToAdd["amount"] = (int)userList[i].getAccount()[k].getTransactions()[l].getAmount();
-                transactionToAdd["trDate"] = userList[i].getAccount()[k].getTransactions()[l].getDate().toString("dd/MM/yyyy");
-                transactionToAdd["trTime"] = userList[i].getAccount()[k].getTransactions()[l].getTime().toString("HH/mm/ss");
+                transactionToAdd["amount"] = crypt.encryptToString(QString::number(userList[i].getAccount()[k].getTransactions()[l].getAmount()));
+                transactionToAdd["trDate"] = crypt.encryptToString(userList[i].getAccount()[k].getTransactions()[l].getDate().toString("dd/MM/yyyy"));
+                transactionToAdd["trTime"] = crypt.encryptToString(userList[i].getAccount()[k].getTransactions()[l].getTime().toString("HH/mm/ss"));
                 transactionsArray.append(transactionToAdd);
             }
             accountToAdd["transactionList"]= transactionsArray;

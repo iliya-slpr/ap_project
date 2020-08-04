@@ -452,6 +452,12 @@
     </disabled>
    </palette>
   </property>
+  <property name="font">
+   <font>
+    <family>B Yekan</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="acceptDrops">
    <bool>false</bool>
   </property>
@@ -462,6 +468,12 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <family>B Yekan</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
       </property>
@@ -472,7 +484,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="accounts">
        <attribute name="title">
@@ -485,24 +497,71 @@
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
              <widget class="QLabel" name="accountNumberLed">
+              <property name="font">
+               <font>
+                <family>B Yekan</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
                <string>شماره حساب:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit"/>
+             <widget class="QLineEdit" name="lineEdit">
+              <property name="styleSheet">
+               <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+              </property>
+              <property name="frame">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_9"/>
             </item>
             <item>
-             <widget class="QTableWidget" name="accountTable"/>
+             <widget class="QTableWidget" name="accountTable">
+              <property name="font">
+               <font>
+                <family>B Yekan</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <widget class="QPushButton" name="selectAccount">
+                <property name="font">
+                 <font>
+                  <family>B Yekan</family>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}</string>
+                </property>
                 <property name="text">
                  <string>انتخاب حساب</string>
                 </property>
@@ -523,6 +582,23 @@
               </item>
               <item>
                <widget class="QPushButton" name="addAccount">
+                <property name="font">
+                 <font>
+                  <family>B Yekan</family>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#666;
+border:1px solid #333
+}</string>
+                </property>
                 <property name="text">
                  <string>افزودن حساب</string>
                 </property>
@@ -547,7 +623,7 @@
            <enum>Qt::RightToLeft</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="editProfileTab">
            <attribute name="title">
@@ -722,7 +798,7 @@
      <x>0</x>
      <y>0</y>
      <width>1205</width>
-     <height>25</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>

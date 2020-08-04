@@ -8,8 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-
-
+#include "simplecrypt.h"
 class Application
 {
 public:
@@ -35,6 +34,7 @@ private:
     QMessageBox message;
     int userIndex;
     bool loginStatus=false;
+    SimpleCrypt crypt;
 
 };
 

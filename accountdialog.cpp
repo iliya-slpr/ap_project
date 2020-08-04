@@ -86,6 +86,21 @@ void AccountDialog::on_transferBtn_clicked()
         message.show();
         return;
     }
+
+    if(application.currentAccount->getBalance()<ui->amount->text().toInt())
+    {
+        message.setText("موجودی شما برای این انتقال کافی نیست !");
+        message.setWindowTitle("خطا");
+        message.show();
+        return;
+    }
+    if(desAccount->getStatus()!=0)
+    {
+        message.setText("حساب مقصد فعال نیست");
+        message.setWindowTitle("خطا");
+        message.show();
+        return;
+    }
     if(application.currentAccount->getType()==3)
     {
         QMessageBox msgBox;
@@ -105,20 +120,6 @@ void AccountDialog::on_transferBtn_clicked()
         {
             application.currentAccount->changeTypeToShortTerm();
         }
-    }
-    if(application.currentAccount->getBalance()<ui->amount->text().toInt())
-    {
-        message.setText("موجودی شما برای این انتقال کافی نیست !");
-        message.setWindowTitle("خطا");
-        message.show();
-        return;
-    }
-    if(desAccount->getStatus()!=0)
-    {
-        message.setText("حساب مقصد فعال نیست");
-        message.setWindowTitle("خطا");
-        message.show();
-        return;
     }
     if(application.currentAccount->getType()==2)
     {
@@ -229,4 +230,10 @@ void AccountDialog::on_pushButton_clicked()
         message.show();
     }
 
+}
+
+void AccountDialog::on_pushButton_2_clicked()
+{
+    ui->accNum->setText("");
+    ui->amount->setText("");
 }

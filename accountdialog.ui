@@ -182,6 +182,12 @@
     </disabled>
    </palette>
   </property>
+  <property name="font">
+   <font>
+    <family>B Yekan</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -198,7 +204,7 @@
     <enum>Qt::RightToLeft</enum>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">

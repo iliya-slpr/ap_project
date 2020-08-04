@@ -4,6 +4,7 @@
 #include "loginwindow.h"
 #include <QMainWindow>
 #include"adduser.h"
+#include "simplecrypt.h"
 namespace Ui {
 class AdminPanel;
 }
@@ -64,6 +65,7 @@ private slots:
 private:
     QMessageBox message;
     Ui::AdminPanel *ui;
+    SimpleCrypt crypt;
 };
 
 #endif // ADMINPANEL_H

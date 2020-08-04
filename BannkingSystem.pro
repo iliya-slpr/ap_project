@@ -30,6 +30,7 @@ SOURCES += \
     personallog.cpp \
     securepassword.cpp \
     showlogs.cpp \
+    simplecrypt.cpp \
     user.cpp
 
 HEADERS += \
@@ -46,6 +47,7 @@ HEADERS += \
     personallog.h \
     securepassword.h \
     showlogs.h \
+    simplecrypt.h \
     user.h
 
 FORMS += \

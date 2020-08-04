@@ -47,6 +47,11 @@ MainWindow::MainWindow(QWidget *parent) :
     on_editProfileTab_tabBarClicked(0);
     on_editProfileTab_tabBarClicked(1);
     on_lineEdit_textChanged("");
+    ui->accountTable->setShowGrid(false);
+    ui->accountTable->setColumnWidth(1,200);
+    ui->accountTable->setColumnWidth(2,200);
+    ui->accountTable->setColumnWidth(3,200);
+    ui->accountTable->setStyleSheet("QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #336, stop: 1 #446,stop: 0.9 #eee,stop: 1 #eee );width: 15px;}QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{padding:10px;text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}QScrollBar:vertical{ width: 35px; background: none;}QScrollBar::handle:vertical{ border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #fff, stop: 1 #eee,stop: 0.5 #ddd,stop: 1 #eee ); width: 25px; min-height: 20px; max-height: 25px; /*these sort no effect*/ }QScrollBar::add-page:vertical {border: 3px solid red;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background:  red; /* adding width: xx px; sorting no effect .. why? */}QScrollBar::sub-page:vertical {border: 3px solid green;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background:  green; /* adding width: xx px; sorting no effect .. why? */ }");
 
 }
 bool MainWindow::getLoginSeccess()
@@ -133,23 +138,31 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
             ui->accountTable->setItem(row,3,new QTableWidgetItem(status));
         }
     }
-    ui->accountTable->setCurrentCell(0,0);
 }
 
 void MainWindow::on_selectAccount_clicked()
 {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("تایید");
-    msgBox.setText("آیا از انتخاب حساب :"+ui->accountTable->item(ui->accountTable->currentRow(),0)->text()+"مطمئن هستید ؟");
-    msgBox.setStandardButtons(QMessageBox::Yes);
-    msgBox.addButton(QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
-    if(msgBox.exec() == QMessageBox::Yes)
+    if(!ui->accountTable->selectedItems().isEmpty())
     {
-        accountDialog=new AccountDialog();
-        connect(this,SIGNAL(sendCurrentAcc(QString)),accountDialog,SLOT(receiveAccount(QString)));
-        emit sendCurrentAcc(ui->accountTable->item(ui->accountTable->currentRow(),0)->text());
-        accountDialog->show();
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("تایید");
+        msgBox.setText("آیا از انتخاب حساب :"+ui->accountTable->item(ui->accountTable->currentRow(),0)->text()+"مطمئن هستید ؟");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
+        {
+            accountDialog=new AccountDialog();
+            connect(this,SIGNAL(sendCurrentAcc(QString)),accountDialog,SLOT(receiveAccount(QString)));
+            emit sendCurrentAcc(ui->accountTable->item(ui->accountTable->currentRow(),0)->text());
+            accountDialog->show();
+        }
+    }
+    else
+    {
+        message.setText("لطفا ابتدا یک ردیف را انتخاب نمایید !");
+        message.setWindowTitle("خطا");
+        message.show();
     }
 }
 
