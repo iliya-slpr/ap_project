@@ -548,3 +548,42 @@ void AdminPanel::on_changeCardStatusBtn_clicked()
     writeUsers();
 
 }
+
+void AdminPanel::on_longAccountBtn_clicked()
+{
+    readUsers();
+    for(int i=0;i<userList.size();i++)
+    {
+        for(int j=0;j<userList[i].getAccount().size();j++)
+        {
+            if(userList[i].getAccountPointer(j)->getType()==3&&userList[i].getAccountPointer(j)->getStatus()==0)
+            {
+                userList[i].getAccountPointer(j)->plusBalance(userList[i].getAccountPointer(j)->getBalance()*0.15);
+            }
+        }
+    }
+    message.setText("عملیات با موفقیت انجام شد");
+    message.setWindowTitle("موفق");
+    message.show();
+    writeUsers();
+}
+
+void AdminPanel::on_shortAccountBtn_clicked()
+{
+    readUsers();
+    for(int i=0;i<userList.size();i++)
+    {
+        for(int j=0;j<userList[i].getAccount().size();j++)
+        {
+            if(userList[i].getAccountPointer(j)->getType()==2||userList[i].getAccountPointer(j)->getType()==1)
+            {
+                if(userList[i].getAccountPointer(j)->getStatus()==0)
+                userList[i].getAccountPointer(j)->plusBalance(userList[i].getAccountPointer(j)->getBalance()*0.05);
+            }
+        }
+    }
+    message.setText("عملیات با موفقیت انجام شد");
+    message.setWindowTitle("موفق");
+    message.show();
+    writeUsers();
+}

@@ -34,7 +34,7 @@ public:
 private:
     QMessageBox message;
     int userIndex;
-    bool loginStatus;
+    bool loginStatus=false;
 
 };
 

@@ -641,7 +641,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="usersTab">
        <property name="enabled">
@@ -718,6 +718,20 @@
            </spacer>
           </item>
           <item>
+           <widget class="QPushButton" name="shortAccountBtn">
+            <property name="text">
+             <string>پرداخت سود حساب های کوتاه مدت</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="longAccountBtn">
+            <property name="text">
+             <string>پرداخت سود حساب های بلندمدت</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="changeStatusBtn">
             <property name="autoFillBackground">
              <bool>true</bool>
@@ -735,6 +749,13 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>راهنما: پرداخت سود حساب های کوتاه مدت باید هر ماه یکبار و پرداخت سود حساب های بلند مدت باید هر سه ماه یکبار انجام شود </string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

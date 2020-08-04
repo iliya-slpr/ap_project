@@ -224,6 +224,7 @@ BankAccount* Application::findAccount(QString accNum,QString username)     //typ
 }
 bool Application::login(QString username,QString password)
 {
+
     for(int i=0;i<userList.size();i++)
     {
         if(username==userList[i].getUsername()&&password==userList[i].getPassword())
@@ -235,9 +236,9 @@ bool Application::login(QString username,QString password)
             message.setWindowTitle("موفق");
             message.setStandardButtons(QMessageBox::Ok);
             loginStatus=true;
+            writeUsers();
             if(message.exec()==QMessageBox::Ok)
                 return loginStatus;
-            writeUsers();
         }
     }
     if(loginStatus==false)

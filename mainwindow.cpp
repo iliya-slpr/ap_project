@@ -14,18 +14,26 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             if(login->getIsAdmin())
             {
-                loginSeccess=application.login(login->getUsername(),login->getPassword());
-                application.writeUsers();
-                if(loginSeccess)
+                if(login->getUsername()=="admin"&&login->getPassword()=="admin")
                 {
+                    message.setText("با موفقیت وارد شدید!");
+                    message.setWindowTitle("موفق");
+                    message.setStandardButtons(QMessageBox::Ok);
+                    message.exec();
                     isAdmin=true;
+                    loginSeccess=true;
                     return;
                 }
             }
             loginSeccess=application.login(login->getUsername(),login->getPassword());
-            application.writeUsers();
             if(loginSeccess)
+            {
                 break;
+            }
+            else
+            {
+                result=login->exec();
+            }
         }
         else if(result==QDialog::Rejected)
         {
@@ -108,14 +116,13 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
             if(application.currentUser->getAccount()[i].getStatus()!=2)
                 ui->accountTable->setItem(row,0,new QTableWidgetItem(application.currentUser->getAccount()[i].getAccountNumber()));
             else
-                ui->accountTable->setItem(row,0,new QTableWidgetItem("درحال بررسی"));
+                ui->accountTable->setItem(row,0,new QTableWidgetItem("در حال تخصیص"));
             QString type;
             if(application.currentUser->getAccount()[i].getType()==0)type="قرض الحسنه";
             else if(application.currentUser->getAccount()[i].getType()==1)type="کوتاه مدت";   ///// SAVING=0 , SHORT_TERM=1 , SHORT_TERM_LEGAL=2 , LONG_TERM=3
             else if(application.currentUser->getAccount()[i].getType()==2)type="کوتاه مدت حقوقی";
             else if(application.currentUser->getAccount()[i].getType()==3)type="بلند مدت";
-            if(application.currentUser->getAccount()[i].getStatus()!=2)
-                ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
+            ui->accountTable->setItem(row,1,new QTableWidgetItem(type));
             if(application.currentUser->getAccount()[i].getStatus()!=2)
                 ui->accountTable->setItem(row,2,new QTableWidgetItem(QString::number(application.currentUser->getAccount()[i].getBalance())));
             QString status;
@@ -205,3 +212,4 @@ void MainWindow::on_accountTable_cellClicked(int row, int column)
     else
         ui->selectAccount->setDisabled(false);
 }
+

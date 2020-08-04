@@ -57,6 +57,10 @@ private slots:
 
     void on_changeCardStatusBtn_clicked();
 
+    void on_longAccountBtn_clicked();
+
+    void on_shortAccountBtn_clicked();
+
 private:
     QMessageBox message;
     Ui::AdminPanel *ui;
