@@ -43,6 +43,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_PDFBtn_clicked();
+
 private:
     Ui::AccountDialog *ui;
     Application application;

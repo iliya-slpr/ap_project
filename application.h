@@ -28,6 +28,8 @@ public:
     void refresh(QString);
     void refresh(int);
     int getUserIndex();
+    void makePDF(QString _accountNum, QString _fileName);
+
 
 
 private:

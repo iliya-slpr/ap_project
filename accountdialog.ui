@@ -204,7 +204,7 @@
     <enum>Qt::RightToLeft</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -279,7 +279,7 @@
        <x>20</x>
        <y>300</y>
        <width>694</width>
-       <height>27</height>
+       <height>28</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -317,13 +317,13 @@
     <attribute name="title">
      <string>ده گردش آخر</string>
     </attribute>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>731</width>
-       <height>331</height>
+       <x>10</x>
+       <y>0</y>
+       <width>741</width>
+       <height>341</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -336,6 +336,30 @@
       </item>
       <item>
        <widget class="QListWidget" name="transactions10"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="PDFBtn">
+          <property name="text">
+           <string>چاپ PDF</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -481,7 +505,7 @@
        <x>590</x>
        <y>10</y>
        <width>152</width>
-       <height>73</height>
+       <height>76</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="formLayout_3">

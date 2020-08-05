@@ -237,3 +237,11 @@ void AccountDialog::on_pushButton_2_clicked()
     ui->accNum->setText("");
     ui->amount->setText("");
 }
+
+void AccountDialog::on_PDFBtn_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("save PDF"), "E:\\", tr("PDf Files (*.pdf)"));
+
+        application.makePDF(application.currentAccount->getAccountNumber(),fileName);
+}
