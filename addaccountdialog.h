@@ -1,6 +1,6 @@
 #ifndef ADDACCOUNTDIALOG_H
 #define ADDACCOUNTDIALOG_H
-
+#include <QTcpSocket>
 #include <QDialog>
 
 namespace Ui {

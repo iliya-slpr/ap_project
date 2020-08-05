@@ -1,5 +1,6 @@
 #include "application.h"
-
+#include <QTextDocument>
+#include <QPrinter>
 Application::Application()
 {
     crypt.setKey(10000);
@@ -315,4 +316,54 @@ User* Application::findUsername(QString user)
             return &userList[k];
         }
     }
+}
+
+void Application::makePDF(QString _accountNum, QString _fileName)
+{
+    BankAccount tmp = *findAccount(_accountNum , 0);
+    QString html =
+    "<body style=\"background-color: color:#38386;\">"
+    "<div align=right>"
+       "تاریخ:"
+            +QDate::currentDate().toString()+
+    "</div>"
+    "<div align=left>"
+       "شماره حساب: "
+       + tmp.getAccountNumber() +
+
+    "</div>"
+    "<h1 align=center style=\"color:#38386; font-family: \"B Yekan\";\">ده گردش آخر حساب</h1><hr width=\"3px\">"
+    "<div align=center>";
+    for(int i = 0; i<10 ; i++){
+        transaction trTmp = tmp.getTransactions()[i];
+        html += "<p align=center>"
+                "تاریخ:"
+                +trTmp.getDate().toString()+
+                "  زمان"
+                +trTmp.getTime().toString()+
+                "  از حساب:"
+                +trTmp.getOriginBankAcc().getAccountNumber()+
+                "  به حساب"
+                +trTmp.getOriginBankAcc().getAccountNumber()+
+                "  به مبلغ:"
+                + QString::number(trTmp.getAmount())+
+                "</div><hr style=\"width:5px;color:#38386a;\">";
+        if(i+1==tmp.getTransactions().size())break;
+
+
+    }
+
+    html +="</p>"
+    "</body>";
+
+    QTextDocument document;
+    document.setHtml(html);
+
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setOutputFileName(_fileName);
+    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+
+    document.print(&printer);
 }
