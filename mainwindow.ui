@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1205</width>
-    <height>1077</height>
+    <height>1101</height>
    </rect>
   </property>
   <property name="palette">
@@ -484,7 +484,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="accounts">
        <attribute name="title">
@@ -538,6 +538,27 @@ border:3px solid #44a;
                 <family>B Yekan</family>
                 <pointsize>10</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{padding:10px;text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+font-family:B Yekan
+
+}</string>
               </property>
              </widget>
             </item>
@@ -623,7 +644,7 @@ border:1px solid #333
            <enum>Qt::RightToLeft</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="editProfileTab">
            <attribute name="title">
@@ -674,19 +695,95 @@ border:1px solid #333
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_2">
                 <item>
-                 <widget class="QLineEdit" name="nameLed"/>
+                 <widget class="QLineEdit" name="nameLed">
+                  <property name="maximumSize">
+                   <size>
+                    <width>1920</width>
+                    <height>1080</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="nCodeLed"/>
+                 <widget class="QLineEdit" name="nCodeLed">
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QDateEdit" name="BdateLed"/>
+                 <widget class="QDateEdit" name="BdateLed">
+                  <property name="styleSheet">
+                   <string notr="true">QDateEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QDateEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="usernameLed"/>
+                 <widget class="QLineEdit" name="usernameLed">
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="passLed"/>
+                 <widget class="QLineEdit" name="passLed">
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #44a;
+}
+</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -709,6 +806,14 @@ border:1px solid #333
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
                <widget class="QPushButton" name="pushButton">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color:#393; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#4a4;
+border:1px solid #333
+}</string>
+                </property>
                 <property name="text">
                  <string>ثبت</string>
                 </property>
@@ -759,7 +864,13 @@ border:1px solid #333
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="loginList"/>
+               <widget class="QListWidget" name="loginList">
+                <property name="font">
+                 <font>
+                  <family>B Yekan</family>
+                 </font>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -773,7 +884,13 @@ border:1px solid #333
                </widget>
               </item>
               <item>
-               <widget class="QListWidget" name="logoutList"/>
+               <widget class="QListWidget" name="logoutList">
+                <property name="font">
+                 <font>
+                  <family>B Yekan</family>
+                 </font>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -798,7 +915,7 @@ border:1px solid #333
      <x>0</x>
      <y>0</y>
      <width>1205</width>
-     <height>28</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

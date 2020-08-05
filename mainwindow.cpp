@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->accountTable->setColumnWidth(1,200);
     ui->accountTable->setColumnWidth(2,200);
     ui->accountTable->setColumnWidth(3,200);
-    ui->accountTable->setStyleSheet("QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #336, stop: 1 #446,stop: 0.9 #eee,stop: 1 #eee );width: 15px;}QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{padding:10px;text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}QScrollBar:vertical{ width: 35px; background: none;}QScrollBar::handle:vertical{ border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #fff, stop: 1 #eee,stop: 0.5 #ddd,stop: 1 #eee ); width: 25px; min-height: 20px; max-height: 25px; /*these sort no effect*/ }QScrollBar::add-page:vertical {border: 3px solid red;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background:  red; /* adding width: xx px; sorting no effect .. why? */}QScrollBar::sub-page:vertical {border: 3px solid green;text-align: top;padding: 4px;border-radius: 5px; border-bottom-left-radius: 5px;background:  green; /* adding width: xx px; sorting no effect .. why? */ }");
+    //ui->accountTable->setStyleSheet("");
 
 }
 bool MainWindow::getLoginSeccess()
@@ -220,7 +220,9 @@ bool MainWindow::getIsAdmin()
 
 void MainWindow::on_accountTable_cellClicked(int row, int column)
 {
-    if(application.findAccount(ui->accountTable->item(row,0)->text(),1)->getStatus()!=0)
+    if(ui->accountTable->item(row,0)->text().isRightToLeft())
+        ui->selectAccount->setDisabled(true);
+    else if(application.findAccount(ui->accountTable->item(row,0)->text(),1)->getStatus()!=0)
         ui->selectAccount->setDisabled(true);
     else
         ui->selectAccount->setDisabled(false);

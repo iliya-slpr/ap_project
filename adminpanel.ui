@@ -641,8 +641,34 @@
         </disabled>
        </palette>
       </property>
+      <property name="font">
+       <font>
+        <family>B Yekan</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{padding:10px;text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+
+}</string>
       </property>
       <property name="tabPosition">
        <enum>QTabWidget::North</enum>
@@ -651,7 +677,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="usersTab">
        <property name="enabled">
@@ -662,7 +688,37 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QTableWidget" name="usersTable"/>
+         <widget class="QTableWidget" name="usersTable">
+          <property name="font">
+           <font>
+            <family>B Yekan</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{padding:10px;text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+font-family:B Yekan
+}</string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -681,6 +737,17 @@
           </item>
           <item>
            <widget class="QPushButton" name="deleteBtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#933; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#a44;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>حذف کاربر</string>
             </property>
@@ -688,6 +755,17 @@
           </item>
           <item>
            <widget class="QPushButton" name="addUserBtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>کاربر جدید</string>
             </property>
@@ -695,6 +773,18 @@
           </item>
           <item>
            <widget class="QPushButton" name="logsBtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+            </property>
             <property name="text">
              <string>گزارشات</string>
             </property>
@@ -710,7 +800,37 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTableWidget" name="managementTable"/>
+         <widget class="QTableWidget" name="managementTable">
+          <property name="font">
+           <font>
+            <family>B Yekan</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+font-family:B Yekan
+
+}</string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -729,6 +849,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="shortAccountBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+            </property>
             <property name="text">
              <string>پرداخت سود حساب های کوتاه مدت</string>
             </property>
@@ -736,6 +873,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="longAccountBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+            </property>
             <property name="text">
              <string>پرداخت سود حساب های بلندمدت</string>
             </property>
@@ -743,8 +897,25 @@
           </item>
           <item>
            <widget class="QPushButton" name="changeStatusBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="autoFillBackground">
-             <bool>true</bool>
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
             </property>
             <property name="text">
              <string>تغییر وضعیت حساب</string>
@@ -753,6 +924,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="changeCardStatusBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+            </property>
             <property name="text">
              <string>تغییر وضعیت کارت</string>
             </property>
@@ -775,7 +963,37 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QTableWidget" name="pendingAccountsTable"/>
+         <widget class="QTableWidget" name="pendingAccountsTable">
+          <property name="font">
+           <font>
+            <family>B Yekan</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+font-family:B Yekan
+
+}</string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -794,6 +1012,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="rejectBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#933; border-radius: 5px; color: white; padding:10px 25px 10px 25px;}
+QPushButton:hover
+{
+  background-color:#a44;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>رد حساب</string>
             </property>
@@ -801,6 +1036,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="confirmBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#393; border-radius: 5px; color: white; padding:10px 25px 10px 25px;}
+QPushButton:hover
+{
+  background-color:#4a4;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>تایید حساب</string>
             </property>
@@ -816,7 +1068,37 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QTableWidget" name="pendingCardTable"/>
+         <widget class="QTableWidget" name="pendingCardTable">
+          <property name="font">
+           <font>
+            <family>B Yekan</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {border: 3px solid #5E749C;text-align: top;padding: 4px;border-radius: 7px;border-bottom-left-radius: 7px;background: QLinearGradient( x1: 0, y1: 0, x2: 1, y2: 0,stop: 0 #4158d0, stop: 1 #4158d0,stop: 0.9 rgb(240, 216, 255) ,stop: 1 rgb(240, 216, 255));width: 15px;}
+QTableView::item:focus{background-color: #555;color:white;border-bottom:2px solid red;}QTableView::item{text-align:center;border:1px solid blue; border-right:none;border-left:none}QTableView::item:hover{background-color: #777;color:white;}
+QHeaderView {
+    line-height: 1.4;
+    background-color: #002933;
+    border-radius:7px;
+}
+QHeaderView::section {
+    font-size: 15px;
+padding:10px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #002933;
+border-radius:7px;
+font-family:B Yekan
+
+}</string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -835,6 +1117,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="rejeCardBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#933; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#a44;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>رد کارت</string>
             </property>
@@ -842,6 +1141,23 @@
           </item>
           <item>
            <widget class="QPushButton" name="confirmCardBtn">
+            <property name="font">
+             <font>
+              <family>B Yekan</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {background-color:#393; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#4a4;
+border:1px solid #333
+}</string>
+            </property>
             <property name="text">
              <string>تایید کارت</string>
             </property>
@@ -857,7 +1173,14 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QTextEdit" name="transactionTE"/>
+         <widget class="QTextEdit" name="transactionTE">
+          <property name="font">
+           <font>
+            <family>B Yekan</family>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -871,7 +1194,7 @@
      <x>0</x>
      <y>0</y>
      <width>1010</width>
-     <height>28</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
