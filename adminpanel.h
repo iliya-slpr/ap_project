@@ -62,6 +62,8 @@ private slots:
 
     void on_shortAccountBtn_clicked();
 
+    void on_managementTable_cellClicked(int row, int column);
+
 private:
     QMessageBox message;
     Ui::AdminPanel *ui;

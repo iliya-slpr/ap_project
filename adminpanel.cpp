@@ -524,8 +524,17 @@ void AdminPanel::setupManagementTable()
                 ui->managementTable->setItem(ROW_M,6,new QTableWidgetItem(card.getExpireDate().toString("yyyy/MM/dd")));
                 ui->managementTable->setItem(ROW_M,7,new QTableWidgetItem(getStatus(card.getStatus())));
             }
+            else
+            {
+                ui->managementTable->setItem(ROW_M,4,new QTableWidgetItem(""));
+                ui->managementTable->setItem(ROW_M,5,new QTableWidgetItem(""));
+                ui->managementTable->setItem(ROW_M,6,new QTableWidgetItem(""));
+                ui->managementTable->setItem(ROW_M,7,new QTableWidgetItem(""));
+            }
         }
     }
+    ui->managementTable->setColumnWidth(2,300);
+    ui->managementTable->setColumnWidth(4,200);
 }
 
 QString AdminPanel::getStatus(int s)
@@ -716,4 +725,19 @@ void AdminPanel::on_shortAccountBtn_clicked()
     message.setWindowTitle("موفق");
     message.show();
     writeUsers();
+}
+
+void AdminPanel::on_managementTable_cellClicked(int row, int column)
+{
+    if(ui->managementTable->item(row,3)->text()=="درحال بررسی")
+        ui->changeStatusBtn->setDisabled(true);
+    else
+        ui->changeStatusBtn->setDisabled(false);
+
+    if(ui->managementTable->item(row,7)->text().isEmpty())
+        ui->changeCardStatusBtn->setDisabled(true);
+    else if(ui->managementTable->item(row,7)->text()=="درحال بررسی")
+        ui->changeCardStatusBtn->setDisabled(true);
+    else
+        ui->changeCardStatusBtn->setDisabled(false);
 }

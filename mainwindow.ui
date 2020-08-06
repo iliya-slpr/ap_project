@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1205</width>
-    <height>1101</height>
+    <height>1151</height>
    </rect>
   </property>
   <property name="palette">
@@ -464,6 +464,10 @@
   <property name="windowTitle">
    <string>صفحه اصلی</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>E:/icons/userPannel.png</normaloff>E:/icons/userPannel.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -559,6 +563,9 @@ border-radius:7px;
 font-family:B Yekan
 
 }</string>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
               </property>
              </widget>
             </item>

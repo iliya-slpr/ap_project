@@ -6,9 +6,6 @@ loginDialog::loginDialog(QWidget *parent) :
     ui(new Ui::loginDialog)
 {
     ui->setupUi(this);
-    ui->usernameLineEdit->setStyleSheet("QLineEdit { border-radius: 7px; }");
-    ui->passwordLineEdit->setStyleSheet("border-radius: 7px;");
-
 }
 
 loginDialog::~loginDialog()

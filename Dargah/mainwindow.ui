@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>21</red>
+        <green>185</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>84</red>
+        <green>84</green>
+        <blue>84</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>64</red>
+        <green>65</green>
+        <blue>66</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>30</green>
+        <blue>31</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>121</red>
+        <green>121</green>
+        <blue>121</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>64</red>
+        <green>65</green>
+        <blue>66</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>21</red>
+        <green>185</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>84</red>
+        <green>84</green>
+        <blue>84</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>64</red>
+        <green>65</green>
+        <blue>66</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>30</green>
+        <blue>31</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>121</red>
+        <green>121</green>
+        <blue>121</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>64</red>
+        <green>65</green>
+        <blue>66</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="96">
+        <red>164</red>
+        <green>166</green>
+        <blue>168</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>84</red>
+        <green>84</green>
+        <blue>84</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>64</red>
+        <green>65</green>
+        <blue>66</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="96">
+        <red>164</red>
+        <green>166</green>
+        <blue>168</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>57</green>
+        <blue>57</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>208</red>
+        <green>208</green>
+        <blue>208</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="font">
+   <font>
+    <family>B Yekan</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>E:/icons/payment.png</normaloff>E:/icons/payment.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="SourceCardNumberLineEdit">
+          <property name="styleSheet">
+           <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>شماره کارت مبدا</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLineEdit" name="destinationCardNumberLineEdit">
+          <property name="styleSheet">
+           <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>شماره کارت مقصد  </string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="cvv2LineEdit">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>cvv2</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLineEdit" name="yearLed">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>سال</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="monthLed">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>ماه</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>تاریخ انقضا</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLineEdit" name="transactionAmountLineEdit">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>مبلغ تراکنش</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLineEdit" name="SecurePasswordLineEdit">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:4px solid #77c;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>رمز دوم پویا</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>توجه: رمز پویای دریافت شده تا 2 دقیقه معتبر است.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QPushButton" name="transferButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {background-color:#393; border-radius: 5px; color: white; padding:10px 25px 10px 25px;}
+QPushButton:hover
+{
+  background-color:#4a4;
+border:1px solid #333
+}</string>
+        </property>
+        <property name="text">
+         <string>انتقال وجه</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {background-color:#933; border-radius: 5px; color: white; padding:10px 25px 10px 25px;}
+QPushButton:hover
+{
+  background-color:#a44;
+border:1px solid #333
+}</string>
+        </property>
+        <property name="text">
+         <string>انصراف</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

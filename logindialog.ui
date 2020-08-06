@@ -268,6 +268,19 @@
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QLineEdit" name="usernameLineEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:5px solid #44a;
+}
+</string>
+         </property>
          <property name="frame">
           <bool>true</bool>
          </property>
@@ -286,6 +299,19 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="passwordLineEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:5px solid #44a;
+}
+</string>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
@@ -304,6 +330,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="isAdminCheckBox">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="text">
       <string>مدیر</string>
      </property>

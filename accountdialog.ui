@@ -189,336 +189,39 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>مدیریت حساب</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>10</y>
-     <width>761</width>
-     <height>401</height>
-    </rect>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::RightToLeft</enum>
-   </property>
-   <property name="currentIndex">
-    <number>2</number>
-   </property>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>مانده حساب</string>
-    </attribute>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>540</x>
-       <y>10</y>
-       <width>211</width>
-       <height>41</height>
-      </rect>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>E:/icons/bank-account.png</normaloff>E:/icons/bank-account.png</iconset>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_7">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>مانده حساب: </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="balanceLbl">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
-     <string>انتقال وجه</string>
-    </attribute>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>10</y>
-       <width>471</width>
-       <height>87</height>
-      </rect>
+     <property name="currentIndex">
+      <number>4</number>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>شماره حساب مقصد</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="accNum">
-        <property name="styleSheet">
-         <string notr="true">QLineEdit
-{
-border-radius:7px;
-border:2px solid black;
-padding:5px;
-}
-QLineEdit:focus
-{
-border:3px solid #55a;
-}
-</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>مبلغ انتقال</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="amount">
-        <property name="styleSheet">
-         <string notr="true">QLineEdit
-{
-border-radius:7px;
-border:2px solid black;
-padding:5px;
-}
-QLineEdit:focus
-{
-border:3px solid #55a;
-}
-</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>300</y>
-       <width>694</width>
-       <height>45</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>518</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
-QPushButton:hover
-{
-  background-color:#777;
-border:1px solid #333
-}
-</string>
-        </property>
-        <property name="text">
-         <string>انصراف</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="transferBtn">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
-QPushButton:hover
-{
-  background-color:#777;
-border:1px solid #333
-}
-</string>
-        </property>
-        <property name="text">
-         <string>انتقال</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_3">
-    <attribute name="title">
-     <string>ده گردش آخر</string>
-    </attribute>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>751</width>
-       <height>361</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>لیست ده گردش آخر حساب</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QListWidget" name="transactions10">
-        <property name="font">
-         <font>
-          <family>B Yekan</family>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="PDFBtn">
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
-QPushButton:hover
-{
-  background-color:#777;
-border:1px solid #333
-}
-</string>
-          </property>
-          <property name="text">
-           <string>PDFخروجی</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_4">
-    <attribute name="title">
-     <string>درخواست کارت</string>
-    </attribute>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>مانده حساب</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
          <item>
-          <layout class="QFormLayout" name="formLayout_2">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_5">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="label">
              <property name="text">
-              <string>شماره کارت</string>
+              <string>مانده حساب: </string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="cardNumlbl">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>شماره cvv2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="cvv2lbl">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>وضعیت کارت</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="statuslbl">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>انقضا :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="expirelbl">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
+           <item>
+            <widget class="QLabel" name="balanceLbl">
              <property name="text">
               <string/>
              </property>
@@ -527,22 +230,219 @@ border:1px solid #333
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>400</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>741</width>
+           <height>268</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>انتقال وجه</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>شماره حساب مقصد</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="accNum">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #55a;
+}
+</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>مبلغ انتقال</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="amount">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit
+{
+border-radius:7px;
+border:2px solid black;
+padding:5px;
+}
+QLineEdit:focus
+{
+border:3px solid #55a;
+}
+</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>741</width>
+           <height>158</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>518</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+           </property>
+           <property name="text">
+            <string>انصراف</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="transferBtn">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+           </property>
+           <property name="text">
+            <string>انتقال</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>ده گردش آخر</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <spacer name="horizontalSpacer_2">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>لیست ده گردش آخر حساب</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>198</width>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QListWidget" name="transactions10">
+           <property name="font">
+            <font>
+             <family>B Yekan</family>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
                <height>20</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="cardbtn">
+            <widget class="QPushButton" name="PDFBtn">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -556,7 +456,7 @@ border:1px solid #333
 </string>
              </property>
              <property name="text">
-              <string>درخواست کارت</string>
+              <string>PDFخروجی</string>
              </property>
             </widget>
            </item>
@@ -564,85 +464,195 @@ border:1px solid #333
          </item>
         </layout>
        </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>درخواست کارت</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <spacer name="horizontalSpacer_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QFormLayout" name="formLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>شماره کارت</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="cardNumlbl">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>شماره cvv2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="cvv2lbl">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>وضعیت کارت</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="statuslbl">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>انقضا :</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="expirelbl">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>198</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="cardbtn">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+QPushButton:hover
+{
+  background-color:#777;
+border:1px solid #333
+}
+</string>
+               </property>
+               <property name="text">
+                <string>درخواست کارت</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>348</width>
+             <height>148</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>348</width>
-           <height>148</height>
+           <width>368</width>
+           <height>320</height>
           </size>
          </property>
         </spacer>
        </item>
       </layout>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>368</width>
-         <height>320</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="tab_5">
-    <attribute name="title">
-     <string>درخواست رمز پویا</string>
-    </attribute>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>10</y>
-       <width>152</width>
-       <height>105</height>
-      </rect>
-     </property>
-     <layout class="QFormLayout" name="formLayout_3">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>رمز پویای شما:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="passLbl">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>معتبر تا :</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="passDatelbl">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="pushButton">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>درخواست رمز پویا</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <layout class="QFormLayout" name="formLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>رمز پویای شما:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="passLbl">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>معتبر تا :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="passDatelbl">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {background-color:#555; border-radius: 5px; color: white; padding:10px 20px 10px 20px;}
 QPushButton:hover
 {
   background-color:#777;
@@ -650,16 +660,47 @@ border:1px solid #333
 }
 
 </string>
-        </property>
-        <property name="text">
-         <string>دریافت رمز پویا</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+             </property>
+             <property name="text">
+              <string>دریافت رمز پویا</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>458</width>
+             <height>88</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>741</width>
+           <height>198</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
